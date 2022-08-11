@@ -196,6 +196,8 @@ gre.set_value(string_value_path, any_type_value_that_match)
 -- ./images/image_name.img_type (project_folder/images/image_you_want)
 ```
 
+> also, trying to display nil (Null, None, nptr, just such thing in other languages) will cause the system to crush, so value check before pass in.
+
 ## system_init
 
 ----
