@@ -42,6 +42,50 @@ trust me, no one wants to read such a thing. You are not here to enum out all po
 
 > ## clarity is everything
 
+naming is a super important part of software programming. A well-named variable/function should be clear and short if the condition allows. The long long name is acceptable as long as the purpose is clear and easy to understand. Also, it is okay to name something pathlike if necessary.
+
+```lua
+function AppStart(mpargs)
+end
+
+-- path-like keys, not recommended but only when necessary, as they are from the UI path.
+
+action_register_map = {
+    ["viscosity_layer.b1_buttons_group1.input_hysteresis_control.text"] = {40022, 1}, -- visc and pressure of the barrels number
+    ["viscosity_layer.b1_buttons_group1.b1_input_cutout_control.text"] = {40023, 1},
+    ["pressure_layer.b1_buttons_group1.input_hysteresis_control.text"] = {40024, 1},
+    ["pressure_layer.b1_buttons_group1.b1_input_cutout_control.text"] = {40025, 1},
+
+    ["viscosity_layer.b2_buttons_group1.input_hysteresis_control.text"] = {40026, 1},
+    ["viscosity_layer.b2_buttons_group1.input_Cutout_control.text"] = {40027, 1},
+    ["pressure_layer.b2_buttons_group1.input_hysteresis_control.text"] = {40028, 1},
+    ["pressure_layer.b2_buttons_group1.input_Cutout_control.text"] = {40029, 1},
+
+    ["viscosity_layer.b3_buttons_group1.input_hysteresis_control.text"] = {40030, 1},
+    ["viscosity_layer.b3_buttons_group1.input_Cutout_control.text"] = {40031, 1},
+    ["pressure_layer.b3_buttons_group1.input_hysteresis_control.text"] = {40032, 1},
+    ["pressure_layer.b3_buttons_group1.input_Cutout_control.text"] = {40033, 1},
+
+    ["viscosity_layer.b4_buttons_group1.input_hysteresis_control.text"] = {40034, 1},
+    ["viscosity_layer.b4_buttons_group1.input_Cutout_control.text"] = {40035, 1},
+    ["pressure_layer.b4_buttons_group1.input_hysteresis_control.text"] = {40036, 1},
+    ["pressure_layer.b4_buttons_group1.input_Cutout_control.text"] = {40037, 1},
+
+    ["Configuration_layer.BOM_control.text"] = {40063, 5}, -- bom string
+    ["Configuration_layer.SerialNumber_control.text"] = {40068, 4}, -- serial number string
+    ["Configuration_layer.StoreID_control.text"] = {40072, 3}, -- store ID string
+
+    ["Compressor_layer.OnDelay_control.text"] = {40042, 1}, -- compressor on delay time number
+    ["Compressor_layer.HoldOff_control.text"] = {40043, 1}, -- compressor hold off time number
+
+    ["fan_hold_layer.Time_control.text"] = {40044, 1} -- fan hold off time number
+}
+
+function heartbeat_status_check()
+end
+
+```
+
 ## system_init
 
 ----
