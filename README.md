@@ -10,11 +10,13 @@
 7. [data_IO](#data_IO)
 
 
-### something_general
+## something_general
 
 ----
 
 First of all, Crank is an embedded UI SDK. It allows you to make embedded projects much easier than hand writes every line of code. However, even if you don't have to hand write every line of code, it is still very important to keep the remaining parts "modular", "abstract", and "low coupling".
+
+> ## keep things separate
 
 For example, you have an update everything function that reads data from an external source, saves those data to variables, and displays those data on the screen. This function will be called every second.
 
@@ -26,31 +28,31 @@ A better solution is to separate fetch data, save data, and update screens into 
 
 (this may not be a good example but just for an general idea about what to do what not to do)
 
-----
+> ## don't repeat yourself
 
 Additionally, there is not sense to make a function for every button with similar outputs. For example, there are six values on the screen, and each of them has an add/sub button near it. There is no sense to write 12 functions such as value_1_add, value_1_sub, and value_2_add... instead, just make value_change(value_path, operation, amount), where value_path represents which value you want to change, and operation represents add/subtract, the amount represents how many you want to add/subtract to it.
 
-### system_init
+## system_init
 
 ----
 
-### system_running
+## system_running
 
 ----
 
 
-### system_structure
+## system_structure
 
 ----
 
-### task_table
+## task_table
 
 ----
 
-### data_structure
+## data_structure
 
 ----
 
-### data_IO
+## data_IO
 
 ----
