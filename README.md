@@ -37,13 +37,13 @@ Additionally, there is not sense to make a function for every button with simila
 
 (no one want to see 12 functions doing the same thing with different "GLOBAL VARIABLES" with in them)
 
-trust me, no one wants to read such a thing. You are not here to enum out all possible results
+Trust me, no one wants to read such a thing. You are not here to enum out all possible results
 
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(33).png">
 
 > ## clarity is everything
 
-naming is a super important part of software programming. A well-named variable/function should be clear and short if the condition allows. The long long name is acceptable as long as the purpose is clear and easy to understand. Also, it is okay to name something pathlike if necessary.
+Naming is a super important part of software programming. A well-named variable/function should be clear and short if the condition allows. The long long name is acceptable as long as the purpose is clear and easy to understand. Also, it is okay to name something pathlike if necessary.
 
 ```lua
 -- this function will be called when application starts
@@ -137,6 +137,30 @@ data_app["power_saver"] = {
 ## UI_structure
 
 ----
+
+Before moving on, there is another very important part you need to be very familiar with, the structure of the UI.
+
+A basic view of the structure of the UI should be just like below
+
+<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/UI_structure.png">
+
+It looks very complex, but we don't need to get into every single part of it, only those important parts.
+
+1. ### screen
+> Yes, a screen is a screen, a whole screen. Your full screen will be filled by the items on the screen you are at.
+
+2. ### layer 
+> A section on the screen, and you can have as many layers as you need on the same screen. However, layers will overlap with each other. The layer on the top will cover the layer at the bottom, which will result in you can only see the layer on top. In addition, the layer can be larger than the screen size, but only the section within the screen will be displayed. (also the layers are shared between screens, so you can't have two layers with the same name but doing different things)
+
+the larger part is screen, the smaller part is the layer belone to this screen
+<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(34).png">
+
+3. ### controls
+> then here comes the important part, that controls, the smallest unit you must have to display something or do something by touching the screen (you cannot just have an image on screen).
+> just like layers belong to the screen, and control must have a layer, and it will follow the display status of the layer (which means if you hide the layer, all controls belonging to this layer will be "hide" even if they are set to "show").
+> For each control, in order to display something, you will need to add "render extension", then we can start inserting elements (mostly images or text).
+<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(37).png">
+<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(38).png">
 
 ## system_init
 
