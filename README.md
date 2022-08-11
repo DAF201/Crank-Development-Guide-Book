@@ -45,6 +45,7 @@ trust me, no one wants to read such a thing. You are not here to enum out all po
 naming is a super important part of software programming. A well-named variable/function should be clear and short if the condition allows. The long long name is acceptable as long as the purpose is clear and easy to understand. Also, it is okay to name something pathlike if necessary.
 
 ```lua
+-- this function will be called when app starts
 function AppStart(mpargs)
 end
 
@@ -81,6 +82,7 @@ action_register_map = {
     ["fan_hold_layer.Time_control.text"] = {40044, 1} -- fan hold off time number
 }
 
+-- check external source communication by heart beat packages
 function heartbeat_status_check()
 end
 
