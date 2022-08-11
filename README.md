@@ -1,10 +1,10 @@
 # Crank_DEV_Guide
 
-> Author DAF201
+> @DAF201
 > 
 > [Email me](mailto:DAF201@blink-in.com)
 >
-> Find me in UTD library 3rd-floor self-study section near the network bookshelves if you need(I am a college student)
+> Find me in UTD library 3rd-floor self-study section near the network bookshelves if you need (I am a college student)
 
 ## table on contents:
 1. [some thing general](#something_general)
