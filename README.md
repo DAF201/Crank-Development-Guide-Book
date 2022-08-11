@@ -6,7 +6,8 @@
 3. [system running](#system_running)
 4. [system_structure](#system_structure)
 5. [data_structure](#data_structure)
-6. [data_io](data_io)
+6. [data_IO](#data_IO)
+
 
 ### something_general
 
@@ -29,6 +30,6 @@
 
 ----
 
-### data_io
+### data_IO
 
 ----
