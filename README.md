@@ -2,12 +2,13 @@
 
 ## table on contents:
 1. [some thing general](#something_general)
-2. [system init](#system_init)
-3. [system running](#system_running)
-4. [system_structure](#system_structure)
-5. [task table](#task_table)
-6. [data_structure](#data_structure)
-7. [data_IO](#data_IO)
+2. [UI structure](#UI_structure)
+3. [system init](#system_init)
+4. [system running](#system_running)
+5. [system_structure](#system_structure)
+6. [task table](#task_table)
+7. [data_structure](#data_structure)
+8. [data_IO](#data_IO)
 
 
 ## something_general
@@ -131,6 +132,11 @@ data_app["power_saver"] = {
 -- for those highly related things, just put them in an array or table
 
 ```
+
+
+## UI_structure
+
+----
 
 ## system_init
 
