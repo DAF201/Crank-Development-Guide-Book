@@ -88,6 +88,50 @@ end
 
 ```
 
+Some bad naming examples, which will cause your co-workers blood pressure to raise sky high
+
+```lua
+-- okay what is CB? your naming is not a standard or universal common sense
+function CBInit(mapargs)
+end
+
+-- don't leave space in any type of naming even string key
+data_barrel_1["beater motor"] = 0
+
+
+data_app["powerSaverStart1"] = 0
+data_app["powerSaverStart2"] = 0
+data_app["powerSaverStart3"] = 0
+data_app["powerSaverStart4"] = 0
+data_app["powerSaverStart5"] = 0
+data_app["powerSaverStart6"] = 0
+data_app["powerSaverStart7"] = 0
+data_app["powerSaverStart8"] = 0
+data_app["powerSaverEnd1"] = 0
+data_app["powerSaverEnd2"] = 0
+data_app["powerSaverEnd3"] = 0
+data_app["powerSaverEnd4"] = 0
+data_app["powerSaverEnd5"] = 0
+data_app["powerSaverEnd6"] = 0
+data_app["powerSaverEnd7"] = 0
+data_app["powerSaverEnd8"] = 0
+
+---why don't make something like
+data_app["power_saver"] = {
+    { 0, 0 }, --slot 1, first value is start and second value is end
+    { 0, 0 }, --slot 2...
+    { 0, 0 },
+    { 0, 0 },
+    { 0, 0 },
+    { 0, 0 },
+    { 0, 0 },
+    { 0, 0 }
+}
+
+-- for those highly related things, just put them in an array or table
+
+```
+
 ## system_init
 
 ----
