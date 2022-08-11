@@ -161,12 +161,40 @@ It looks very complex, but we don't need to get into every single part of it, on
 the larger part is screen, the smaller part is the layer belone to this screen
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(34).png">
 
-3. ### controls
-> then here comes the important part, that controls, the smallest unit you must have to display something or do something by touching the screen (you cannot just have an image on screen).
+3. ### control
+> Then here comes the important part, that controls, the smallest unit you must have to display something or do something by touching the screen (you cannot just have an image on screen).
 > just like layers belong to the screen, and control must have a layer, and it will follow the display status of the layer (which means if you hide the layer, all controls belonging to this layer will be "hide" even if they are set to "show").
 > For each control, in order to display something, you will need to add "render extension", then we can start inserting elements (mostly images or text).
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(37).png">
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(38).png">
+
+4. ### varible
+> As it's named, it is a variable, and it can store a value of its type. However, this is one of the most important parts of the whole article, because it is the channel connecting the UI display, data, and external source.
+>
+>For each image or text in a control, we can assign a variable to it, and its display will automatically change with the variable. Each element can only be linked to one variable, but the same variable may be linked to many different elements (just like a function, each x only has one and only one y, but a y can have many x).
+>
+> Below is how to link a variable to an element
+
+Click on the eye-like button, click create variable
+<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(39).png">
+
+Assign value to it (optional, but suggested cause you want something like default value to display when connection is down)
+<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(40).png">
+
+Then you will see a variable under the value of the element and within the control.
+<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(42).png">
+
+> Why is the UI variable so important? Because you can get/modify this variable using Lua APIs and varible path, the UI display will also change at the same time.
+```lua
+-- get value from this path
+gre.get_value(string_value_path)
+
+-- change value at this path to something...
+gre.set_value(string_value_path, any_type_value_that_match)
+
+-- image value is actually a string relative path which pointer to an image in current project's images folder 
+-- ./images/image_name.img_type (project_folder/images/image_you_want)
+```
 
 ## system_init
 
