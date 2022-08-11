@@ -22,6 +22,13 @@ Assume for some reason, a piece of data replay took very long. In this case, the
 
 A better solution is to separate fetch data, save data, and update screens into three functions, and use a timer to regulate them. (which is pretty much impossible in Lua cause Lua does not support threading. luckily, the event callback trigger is by the UI engine, you don't need to worry about when is the event going to come back).
 
+<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/module.png">
+
+(this may not be a good example but just for an general idea about what to do what not to do)
+
+----
+
+Additionally, there is not sense to make a function for every button with similar outputs. For example, there are six values on the screen, and each of them has an add/sub button near it. There is no sense to write 12 functions such as value_1_add, value_1_sub, and value_2_add... instead, just make value_change(value_path, operation, amount), where value_path represents which value you want to change, and operation represents add/subtract, the amount represents how many you want to add/subtract to it.
 
 ### system_init
 
