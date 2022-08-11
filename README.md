@@ -36,6 +36,10 @@ Additionally, there is not sense to make a function for every button with simila
 
 (no one want to see 12 functions doing the same thing with different "GLOBAL VARIABLES" with in them)
 
+trust me, no one wants to read such a thing. You are not here to enum out all possible results
+
+<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(33).png">
+
 > ## clarity is everything
 
 ## system_init
