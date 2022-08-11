@@ -10,11 +10,10 @@
 1. [some thing general](#something_general)
 2. [UI structure](#UI_structure)
 3. [system init](#system_init)
-4. [system running](#system_running)
-5. [system_structure](#system_structure)
-6. [task table](#task_table)
-7. [data_structure](#data_structure)
-8. [data_IO](#data_IO)
+4. [customized functions](#customized_functions)
+5. [task table](#task_table)
+6. [data_structure](#data_structure)
+7. [data_IO](#data_IO)
 
 
 ## something_general
@@ -169,7 +168,7 @@ the larger part is screen, the smaller part is the layer belone to this screen
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(38).png">
 
 4. ### varible
-> As it's named, it is a variable, and it can store a value of its type. However, this is one of the most important parts of the whole article, because it is the channel connecting the UI display, data, and external source.
+> As it's named, it is a variable, and it can store a value of its type. However, this is one of the most important parts of the whole article, because it is the channel connecting the UI display, data, and external source. (it may belong to application itself also rather than control only)
 >
 >For each image or text in a control, we can assign a variable to it, and its display will automatically change with the variable. Each element can only be linked to one variable, but the same variable may be linked to many different elements (just like a function, each x only has one and only one y, but a y can have many x).
 >
@@ -196,18 +195,25 @@ gre.set_value(string_value_path, any_type_value_that_match)
 -- ./images/image_name.img_type (project_folder/images/image_you_want)
 ```
 
-> also, trying to display nil (Null, None, nptr, just such thing in other languages) will cause the system to crush, so value check before pass in.
+> Also, trying to display nil (Null, None, nptr, just such thing in other languages) will cause the system to crush, so value check before pass in.
 
+5. ### action
+> An action is something to do when an event happens (On the UI side, mostly touch, press, release, the application started, or such internal events. We will talk about the custom events in the data IO section).
+>
+> When an action is triggered by an event, it will do something. It can play an animation, change a variable, jump to another screen, call a Lua function, and many others things. Most of the time, we will only use those I mentioned.
+
+below is an example of a press action, it will call the Lua function hello_world when I click on the control (which is the image after application start)
+<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(43).png">
+<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(44).png">
+<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(45).png">
+
+you can also make it trigger by other events or doing other things
 ## system_init
 
 ----
 
-## system_running
 
-----
-
-
-## system_structure
+## customized_functions
 
 ----
 
