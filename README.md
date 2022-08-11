@@ -32,6 +32,12 @@ A better solution is to separate fetch data, save data, and update screens into 
 
 Additionally, there is not sense to make a function for every button with similar outputs. For example, there are six values on the screen, and each of them has an add/sub button near it. There is no sense to write 12 functions such as value_1_add, value_1_sub, and value_2_add... instead, just make value_change(value_path, operation, amount), where value_path represents which value you want to change, and operation represents add/subtract, the amount represents how many you want to add/subtract to it.
 
+<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/generalize.png">
+
+(no one want to see 12 functions doing the same thing with different "GLOBAL VARIABLES" with in them)
+
+> ## clarity is everything
+
 ## system_init
 
 ----
