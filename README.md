@@ -262,6 +262,39 @@ gre.thread_create(function)
 
 ----
 
+Finally, we reached the coding part, so let's start with a hello world.
+
+Suddenly, you realize: "where in the world am I going to put my functions?" The SDK doesn't look like a text editor at all.
+<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(47).png">
+
+So let's start from zero to one.
+
+Firstly, we always want to have a function that starts when the application starts. So we go to the application, right-click the project, click add action
+<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(50).png">
+
+Then, we select event: application start, action: Lua script, and type in "app_start" as function name, then click "edit"
+<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(51).png">
+
+It will say something like the function does not exist, do you want to create it? click yes, then you will see it create a "callback.lua" with a
+```lua
+
+
+--- @param gre#context mapargs
+function app_start(mapargs)
+--TODO: Your code goes here...
+end
+
+-- we change it to
+function app_start(mapargs)
+    print("hello world")
+end
+```
+
+now we can test the code, after we got an entrance. It will print a "Hello world" on console when application starts (right bottom).
+<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(52).png">
+
+And we can start with building out system initialization and services with this entrance. You will start your system initialization and services startup from this app_start function (Still structure is important, don't put everything together[to my system init](#system_init)).
+
 ## task_table
 
 ----
