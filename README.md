@@ -238,8 +238,24 @@ add custom event
 >
 > Date updates include screen updates and variable updates. Screen update is updating the status of the screen, such as which screen should we go to when the application starts, which part of the screen should be shown, and which parts of the screen should be hidden (even we can set those in UI, sometimes we still need some curtain like things to show on application start, but we don't want curtain to block our eyesight when developing). The variable update is changing the variables stored in the controls or application, which will change the display on the screen or let Lua get different data later (which usually makes no sense, except for some flag variables stored in the application. Cause mostly those variables are used and manipulated by services).
 >
-> Then we have the service start up. Service is not a concept defined by the crank, instead, it is my personal defined concept. According to my definition, a service is a "thread" separately running from the main thread that provides async serve for the main thread as the main thread can not stop and wait for some functions to finish (crank Lua does not support coroutine or threading, but is has something similar but cost tons of resources). 
+> Then we have the service start up. Service is not a concept defined by the crank, instead, it is my personal defined concept. According to my definition, a service is a separately running function from the main thread that provides a service for the main thread. Crank Lua does not support coroutine or threading, but it has something similar Actually Lua itself does not support threading at all. Why do I mention this? Because the crank provides some C APIs to do that (Looks like C but I can not guarantee how the crank made those).
 >
+> Like before, I am going to provide some examples of the services. 
+
+<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/service.drawio.png">
+
+> The timer service is a function that runs separately from the main thread. It will fetch all the tasks being registered in the task table from the main thread or other services, and execute the task by the time it reaches the task's schedule. After each execution, it will check if the task is a repeating task. If not, it will unregister this task from the task table.
+>
+> A funny fact, the crank has build in timer and threading by it self, which are: 
+``` lua
+-- make an function execute every interval ms
+id = gre.timer_set_interval(interval,function)
+-- stop the repeating of function executation
+gre.timer_clear_interval(id)
+-- create a thread
+gre.thread_create(function)
+```
+> However, I will say use those APIs as less as possible. Those built-in threading will slow down the application. The creation of new thread costs, the switches between threads costs, and the running of threading costs. There are costs everywhere when you have too many threads. When I got the Brix, every timed function was called by the "gre.timer_set_interval", and the system was quite slow (the communication part took very long to react, the events were lost some time, and the clock was not loaded correctly sometimes). Later, I decided to rewrite the structure, then I have the structure above (But I will still say keep only necessary parts, I intergraded other services such as heartbeat service which check communication status as tasks into registered tasks to speed it up). 
 
 ## customized_functions
 
