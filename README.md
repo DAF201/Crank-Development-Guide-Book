@@ -17,13 +17,13 @@
 8. [some components](#free_components)
 
 
-## something_general
+# something_general
 
 ----
 
 First of all, Crank is an embedded UI SDK. It allows you to make embedded projects much easier than hand writes every line of code. However, even if you don't have to hand write every line of code, it is still very important to keep the remaining parts "modular", "abstract", and "low coupling".
 
-> ## keep things separate
+## keep things separate
 
 For example, you have an update everything function that reads data from an external source, saves those data to variables, and displays those data on the screen. This function will be called every second.
 
@@ -35,7 +35,7 @@ A better solution is to separate fetch data, save data, and update screens into 
 
 (this may not be a good example but just an general idea about what to do and what not to do)
 
-> ## don't repeat yourself
+## don't repeat yourself
 
 Additionally, there is no sense to make a function for every button with similar outputs. For example, there are six values on the screen, and each of them has an add/sub button near it. There is no sense to write 12 functions such as value_1_add, value_1_sub, and value_2_add... instead, just make value_change(value_path, operation, amount), where value_path represents which value you want to change, and operation represents add/subtract, the amount represents how many you want to add/subtract to it.
 
@@ -47,7 +47,7 @@ Trust me, no one wants to read such a thing. You are not here to enum out all po
 
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(33).png">
 
-> ## clarity is everything
+## clarity is everything
 
 Naming is a super important part of software programming. A well-named variable/function should be clear and short if the condition allows. The long long name is acceptable as long as the purpose is clear and easy to understand. Also, it is okay to name something pathlike if necessary.
 
@@ -140,7 +140,7 @@ data_app["power_saver"] = {
 ```
 
 
-## UI_structure_and_important_concepts
+# UI_structure_and_important_concepts
 
 ----
 
@@ -152,28 +152,28 @@ A basic view of the structure of the UI should be just like below
 
 It looks very complex, but we don't need to get into every single part of it, only those important parts.
 
-1. ### screen
-> Yes, a screen is a screen, a whole screen. Your full screen will be filled with the items on the screen you are at.
+### screen
+Yes, a screen is a screen, a whole screen. Your full screen will be filled with the items on the screen you are at.
 
-2. ### layer 
-> A section on the screen, and you can have as many layers as you need on the same screen. However, layers will overlap with each other. The layer on the top will cover the layer at the bottom, which will result in you can only see the layer on top. In addition, the layer can be larger than the screen size, but only the section within the screen will be displayed. (also the layers are shared between screens, so you can't have two layers with the same name but doing different things)
+### layer 
+A section on the screen, and you can have as many layers as you need on the same screen. However, layers will overlap with each other. The layer on the top will cover the layer at the bottom, which will result in you can only see the layer on top. In addition, the layer can be larger than the screen size, but only the section within the screen will be displayed. (also the layers are shared between screens, so you can't have two layers with the same name but doing different things)
 
 the larger part is the screen, the smaller part is the layer belong to this screen
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(34).png">
 
-3. ### control
-> Then here comes the important part, that controls, the smallest unit you must have to display something or do something by touching the screen (you cannot just have an image on screen).
-> just like layers belong to the screen, and control must have a layer, and it will follow the display status of the layer (which means if you hide the layer, all controls belonging to this layer will be "hide" even if they are set to "show").
-> For each control, to display something, you will need to add "render extension", then we can start inserting elements (mostly images or text).
+### control
+Then here comes the important part, that controls, the smallest unit you must have to display something or do something by touching the screen (you cannot just have an image on screen).
+just like layers belong to the screen, and control must have a layer, and it will follow the display status of the layer (which means if you hide the layer, all controls belonging to this layer will be "hide" even if they are set to "show").
+For each control, to display something, you will need to add "render extension", then we can start inserting elements (mostly images or text).
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(37).png">
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(38).png">
 
-4. ### variable
-> As it's named, it is a variable, and it can store a value of its type. However, this is one of the most important parts of the whole article, because it is the channel connecting the UI display, data, and external source. (it may belong to the application itself also rather than control only)
->
->For each image or text in a control, we can assign a variable to it, and its display will automatically change with the variable. Each element can only be linked to one variable, but the same variable may be linked to many different elements (just like a function, each x only has one and only one y, but a y can have many x).
->
-> Below is how to link a variable to an element
+### variable
+As it's named, it is a variable, and it can store a value of its type. However, this is one of the most important parts of the whole article, because it is the channel connecting the UI display, data, and external source. (it may belong to the application itself also rather than control only)
+
+For each image or text in a control, we can assign a variable to it, and its display will automatically change with the variable. Each element can only be linked to one variable, but the same variable may be linked to many different elements (just like a function, each x only has one and only one y, but a y can have many x).
+
+Below is how to link a variable to an element
 
 Click on the eye-like button, click create a variable
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(39).png">
@@ -184,7 +184,7 @@ Assign a value to it (optional, but suggested cause you want something like defa
 Then you will see a variable under the value of the element and within the control.
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(42).png">
 
-> Why is the UI variable so important? Because you can get/modify this variable using Lua APIs and a varible path, the UI display will also change at the same time.
+Why is the UI variable so important? Because you can get/modify this variable using Lua APIs and a varible path, the UI display will also change at the same time.
 ```lua
 -- get value from this path
 gre.get_value(string_value_path)
@@ -196,12 +196,12 @@ gre.set_value(string_value_path, any_type_value_that_match)
 -- ./images/image_name.img_type (project_folder/images/image_you_want)
 ```
 
-> Also, trying to display nil (Null, None, nptr, just such thing in other languages) will cause the system to crash, so value check before the pass in.
+Also, trying to display nil (Null, None, nptr, just such thing in other languages) will cause the system to crash, so value check before the pass in.
 
-5. ### action
-> An action is something to do when an event happens (On the UI side, mostly touch, press, release, the application started, or such internal events. We will talk about the custom events in the data IO section).
->
-> When an action is triggered by an event, it will do something. It can play an animation, change a variable, jump to another screen, call a Lua function, and many others things. Most of the time, we will only use those I mentioned.
+### action
+An action is something to do when an event happens (On the UI side, mostly touch, press, release, the application started, or such internal events. We will talk about the custom events in the data IO section).
+
+When an action is triggered by an event, it will do something. It can play an animation, change a variable, jump to another screen, call a Lua function, and many others things. Most of the time, we will only use those I mentioned.
 
 below is an example of a press action, it will call the Lua function hello_world when I click on the control (which is the image after the application start)
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(43).png">
@@ -210,44 +210,44 @@ below is an example of a press action, it will call the Lua function hello_world
 
 you can also make it trigger by other events or doing other things
 
-6. ### event
-> The event is a concept of the happening of something. An event will have its name, data type, and data. Event has three types, self event, incoming event, and outgoing events.
-> 
-> A self event is something that happened to the application or screen. An example is the press event. In most cases, we only need small parts of the self-events, and mostly for buttons. commonly used self events include :"touch", "press", "release", "application start", and "screen show".
->
-> An incoming event is an event that comes from outside of the application. The main purpose of this type of event is to update data or execute external commands.
->
-> An outgoing event is an event that sends out from the application. The main purpose of this type of event is to make changes to an external source or let an external source execute commands.
->
-> we will talk about incoming and outgoing events in detail in data_IO.
+### event
+The event is a concept of the happening of something. An event will have its name, data type, and data. Event has three types, self event, incoming event, and outgoing events.
+ 
+A self event is something that happened to the application or screen. An example is the press event. In most cases, we only need small parts of the self-events, and mostly for buttons. commonly used self events include :"touch", "press", "release", "application start", and "screen show".
+
+An incoming event is an event that comes from outside of the application. The main purpose of this type of event is to update data or execute external commands.
+
+An outgoing event is an event that sends out from the application. The main purpose of this type of event is to make changes to an external source or let an external source execute commands.
+
+we will talk about incoming and outgoing events in detail in data_IO.
 
 add custom event
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(46).png">
 
-## system_init
+# system_init
 
 ----
 
-> Now we are moving on to the system initialization section, below is the process of the system initialization I redesigned for [brix](https://github.com/DAF201/intern_2022/tree/main/brix).
+Now we are moving on to the system initialization section, below is the process of the system initialization I redesigned for [brix](https://github.com/DAF201/intern_2022/tree/main/brix).
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/system_init.png">
 
-> The main purpose of the system initialization is to ensure the UI is displaying correctly, and the services are started.
-> 
-> As people always say, "a good beginning is half done", as the entrance of the application, the system initialization is one of the most important parts. The structure of the initialization directly influences the efficiency of the application when running.
->
-> The initialization can be split into two parts, the data update and the start-up of the service. 
->
-> Date updates include screen updates and variable updates. Screen update is updating the status of the screen, such as which screen should we go to when the application starts, which part of the screen should be shown, and which parts of the screen should be hidden (even we can set those in UI, sometimes we still need some curtain like things to show on application start, but we don't want curtain to block our eyesight when developing). The variable update is changing the variables stored in the controls or application, which will change the display on the screen or let Lua get different data later (which usually makes no sense, except for some flag variables stored in the application. Cause mostly those variables are used and manipulated by services).
->
-> Then we have the service start up. Service is not a concept defined by the crank, instead, it is my personal defined concept. According to my definition, a service is a separately running function from the main thread that provides a service for the main thread. Crank Lua does not support coroutine or threading, but it has something similar Actually Lua itself does not support threading at all. Why do I mention this? Because the crank provides some C APIs to do that (Looks like C but I can not guarantee how the crank made those).
->
-> Like before, I am going to provide some examples of the services. 
+The main purpose of the system initialization is to ensure the UI is displaying correctly, and the services are started.
+
+As people always say, "a good beginning is half done", as the entrance of the application, the system initialization is one of the most important parts. The structure of the initialization directly influences the efficiency of the application when running.
+
+The initialization can be split into two parts, the data update and the start-up of the service. 
+
+Date updates include screen updates and variable updates. Screen update is updating the status of the screen, such as which screen should we go to when the application starts, which part of the screen should be shown, and which parts of the screen should be hidden (even we can set those in UI, sometimes we still need some curtain like things to show on application start, but we don't want curtain to block our eyesight when developing). The variable update is changing the variables stored in the controls or application, which will change the display on the screen or let Lua get different data later (which usually makes no sense, except for some flag variables stored in the application. Cause mostly those variables are used and manipulated by services).
+
+Then we have the service start up. Service is not a concept defined by the crank, instead, it is my personal defined concept. According to my definition, a service is a separately running function from the main thread that provides a service for the main thread. Crank Lua does not support coroutine or threading, but it has something similar Actually Lua itself does not support threading at all. Why do I mention this? Because the crank provides some C APIs to do that (Looks like C but I can not guarantee how the crank made those).
+
+Like before, I am going to provide some examples of the services. 
 
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/service.drawio.png">
 
-> The timer service is a function that runs separately from the main thread. It will fetch all the tasks being registered in the task table from the main thread or other services, and execute the task by the time it reaches the task's schedule. After each execution, it will check if the task is a repeating task. If not, it will unregister this task from the task table.
->
-> A funny fact, the crank has build in timer and threading by it self, which are: 
+The timer service is a function that runs separately from the main thread. It will fetch all the tasks being registered in the task table from the main thread or other services, and execute the task by the time it reaches the task's schedule. After each execution, it will check if the task is a repeating task. If not, it will unregister this task from the task table.
+
+A funny fact, the crank has build in timer and threading by it self, which are: 
 ``` lua
 -- make an function execute every interval ms
 id = gre.timer_set_interval(interval,function)
@@ -256,9 +256,9 @@ gre.timer_clear_interval(id)
 -- create a thread
 gre.thread_create(function)
 ```
-> However, I will say use those APIs as less as possible. Those built-in threading will slow down the application. The creation of new thread costs, the switches between threads costs, and the running of threading costs. There are costs everywhere when you have too many threads. When I got the Brix, every timed function was called by the "gre.timer_set_interval", and the system was quite slow (the communication part took very long to react, the events were lost some time, and the clock was not loaded correctly sometimes). Later, I decided to rewrite the structure, then I have the structure above (But I will still say keep only necessary parts, I intergraded other services such as heartbeat service which check communication status as tasks into registered tasks to speed it up). 
+However, I will say use those APIs as less as possible. Those built-in threading will slow down the application. The creation of new thread costs, the switches between threads costs, and the running of threading costs. There are costs everywhere when you have too many threads. When I got the Brix, every timed function was called by the "gre.timer_set_interval", and the system was quite slow (the communication part took very long to react, the events were lost some time, and the clock was not loaded correctly sometimes). Later, I decided to rewrite the structure, then I have the structure above (But I will still say keep only necessary parts, I intergraded other services such as heartbeat service which check communication status as tasks into registered tasks to speed it up). 
 
-## customized_functions
+# customized_functions
 
 ----
 
@@ -283,8 +283,12 @@ It will say something like the function does not exist, do you want to create it
 function app_start(mapargs)
 --TODO: Your code goes here...
 end
+```
 
--- we change it to
+<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(53).png">
+
+we change it to
+```lua
 function app_start(mapargs)
     print("hello world")
 end
@@ -293,20 +297,21 @@ end
 now we can test the code, after we got an entrance. It will print a "Hello world" on console when application starts (right bottom).
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(52).png">
 
-And we can start with building out system initialization and services with this entrance. You will start your system initialization and services startup from this app_start function (Still structure is important, don't put everything together[to my system init](#system_init)).
+And we can start with building out system initialization and services with this entrance. You will start your system initialization and services startup from this app_start function (Still structure is important, don't put everything together [[to my system init]](#system_init)).
 
-## task_table
 
-----
-
-## data_structure
+# task_table
 
 ----
 
-## data_IO
+# data_structure
 
 ----
 
-## free_components
+# data_IO
+
+----
+
+# free_components
 
 ----
