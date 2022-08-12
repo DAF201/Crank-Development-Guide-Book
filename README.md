@@ -227,6 +227,13 @@ add custom event
 
 ----
 
+> Now we are moving on to the system initialization section, below is the process of the system initialization I redesigned for [brix](https://github.com/DAF201/intern_2022/tree/main/brix).
+<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/system_init.png">
+
+> The main purpose of the system initialization is to ensure the UI is displaying correctly, and the services are started.
+> 
+> As people always say, "a good beginning is half done", as the entrance of the application, the system initialization is one of the most important parts. The structure of the initialization directly influences the efficiency of the application when running.
+
 
 ## customized_functions
 
