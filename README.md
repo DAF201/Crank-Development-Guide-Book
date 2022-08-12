@@ -329,12 +329,18 @@ end
 ```
 Then you can access your function via events such as button touch manually to interact with the user.
 
-you can go to project path, scripts folder, create scripts manually but what is the point for doing that...
+you can go to the project path, scripts folder, and create scripts manually but what is the point of doing that...
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(55).png">
 
 # task_table
 
 ----
+
+I pulled this part out cause I think it is important. STOP adding a bunch of gre.timer_set_interval or gre.thread_create (this thing don't even support arguments)
+
+You need to come up with a task management service yourself.
+
+Here is how I made one
 
 # data_structure
 
