@@ -233,7 +233,13 @@ add custom event
 > The main purpose of the system initialization is to ensure the UI is displaying correctly, and the services are started.
 > 
 > As people always say, "a good beginning is half done", as the entrance of the application, the system initialization is one of the most important parts. The structure of the initialization directly influences the efficiency of the application when running.
-
+>
+> The initialization can be split into two parts, the data update and the start-up of the service. 
+>
+> Date updates include screen updates and variable updates. Screen update is updating the status of the screen, such as which screen should we go to when the application starts, which part of the screen should be shown, and which parts of the screen should be hidden (even we can set those in UI, sometimes we still need some curtain like things to show on application start, but we don't want curtain to block our eyesight when developing). The variable update is changing the variables stored in the controls or application, which will change the display on the screen or let Lua get different data later (which usually makes no sense, except for some flag variables stored in the application. Cause mostly those variables are used and manipulated by services).
+>
+> Then we have the service start up. Service is not a concept defined by the crank, instead, it is my personal defined concept. According to my definition, a service is a "thread" separately running from the main thread that provides async serve for the main thread as the main thread can not stop and wait for some functions to finish (crank Lua does not support coroutine or threading, but is has something similar but cost tons of resources). 
+>
 
 ## customized_functions
 
