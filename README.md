@@ -14,6 +14,7 @@
 5. [task table](#task_table)
 6. [data_structure](#data_structure)
 7. [data_IO](#data_IO)
+8. [some components](#free_components)
 
 
 ## something_general
@@ -270,5 +271,9 @@ gre.thread_create(function)
 ----
 
 ## data_IO
+
+----
+
+## free_components
 
 ----
