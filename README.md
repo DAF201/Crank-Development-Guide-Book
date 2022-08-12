@@ -19,6 +19,8 @@ I am not here to teach you Lua, and I will assume you are familiar with Lua synt
 3. When you found your function is longer than a screen, stop and think about it.
 4. House is made out of frames and bricks, not decorations. Build necessary framework first then implements functions.
 5. Don't copy variables around unless necessary.
+6. Try to avoid using some APIs, they are slow (namely, gre.timer_set_interval).
+7. It cannot print to the serial ports or ssh, you need to make your own print function.
 
 # table of contents:
 1. [some thing general](#something_general)
