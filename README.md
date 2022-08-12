@@ -6,7 +6,21 @@
 >
 > Find me in the UTD library 3rd-floor self-study section near the network bookshelves if you need (I am a college student)
 
-## table of contents:
+# foreword
+
+----
+
+I am not here to teach you Lua, and I will assume you are familiar with Lua syntax, keywords, style, and grammar... Below, I will only go over things I found important, for other parts like metrics, connectors, and two searches in SDK, I will not explain how to use them. Also, before you start reading the remaining parts, you need to know:
+
+----
+
+1. The case sensitive is the difference between the simulator and the actual machine, don't name something like "variable = 0, VARIABLE = 1". It will not run correctly on an actual machine, and your co-works will want to punch you for sure.
+2. When you found you are copying and pasting a chunk of code, stop and think about it.
+3. When you found your function is longer than a screen, stop and think about it.
+4. House is made out of frames and bricks, not decorations. Build necessary framework first then implements functions.
+5. Don't copy variables around unless necessary.
+
+# table of contents:
 1. [some thing general](#something_general)
 2. [UI structure and some important concepts](#UI_structure_and_important_concepts)
 3. [system init](#system_init)
@@ -294,11 +308,27 @@ function app_start(mapargs)
 end
 ```
 
-now we can test the code, after we got an entrance. It will print a "Hello world" on console when application starts (right bottom).
+Now we can test the code, after we got an entrance. It will print a "Hello world" on console when application starts (right bottom).
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(52).png">
 
 And we can start with building out system initialization and services with this entrance. You will start your system initialization and services startup from this app_start function (Still structure is important, don't put everything together [[to my system init]](#system_init)).
 
+For those custom functions, you can put them all in this "call_back.lua" (which you shouldn't), or right-click on the script section, new to create a new script. However, you need to add a requirement in "callback.lua" to access them since "callback.lua" is the only entrance.
+
+```lua
+-- I created a test.lua with a test_function_from_test_dot_lua function inside it
+
+test=require("test")
+
+--- @param gre#context mapargs
+function app_start(mapargs)
+    print("hello world")
+end
+```
+Then you can access your function via events such as button touch manually to interact with the user.
+
+you can go to project path, scripts folder, create scripts manually but what is the point for doing that...
+<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(55).png">
 
 # task_table
 
