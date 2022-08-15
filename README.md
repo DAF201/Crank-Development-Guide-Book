@@ -523,7 +523,40 @@ So, just store everything you need in UI application screen, and get and change 
 ```
 But for table, just try to reduce usage of global tables and name them clearly, save yourself and others time.
 
-yes, it can save table too, but save table in lua is much easier
+Yes, it can save table too, but save table in lua is much easier.
+
+Also, use a table for variables highly associated to save yourself and others time, because the table is more organized and easier to use when looping.
+
+```lua
+-- use table 
+
+barrel_data = {
+    { 0, 0, 0 }, --barrel_1 : {co2 , h2o , pressure}
+    { 0, 0, 0 }, --barrel_2 : {co2 , h2o , pressure}
+    { 0, 0, 0 }, --...
+    { 0, 0, 0 }
+}
+
+-- instead of 
+
+barrel_1_co2 = 0
+barrel_1_h2o = 0
+barrel_1_pressure = 0
+
+barrel_2_co2 = 0
+barrel_2_h2o = 0
+barrel_2_pressure = 0
+
+barrel_3_co2 = 0
+barrel_3_h2o = 0
+barrel_3_pressure = 0
+
+barrel_4_co2 = 0
+barrel_4_h2o = 0
+barrel_4_pressure = 0
+
+-- to make things more organized and easier to use for looping
+```
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(61).png">
 
 However, I don't have time to change those cause it is too messy and I am about to return to school soon. So just start to change the structure at the next project.
