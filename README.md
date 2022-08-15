@@ -338,9 +338,9 @@ you can go to the project path, scripts folder, and create scripts manually but 
 
 ----
 
-I pulled this part out cause I think it is important. STOP adding a bunch of gre.timer_set_interval or gre.thread_create (this thing don't even support arguments)
+I pulled this part out cause I think it is important. STOP adding a bunch of gre.timer_set_interval or gre.thread_create (this thing doesn't even support arguments)
 
-You need to come up with a task management service yourself.
+You need to come up with a task management service yourself. The quality of this part will directly influence the overall premormance.
 
 Here is an example of task timer
 
