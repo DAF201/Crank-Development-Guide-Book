@@ -497,13 +497,25 @@ I am really confused about why are we having global tables everywhere, and the o
 
 ```lua
 data_barrel_1["temp"] = 0
+
+--okay, what is this temp for? We have like 3 or 4 temperatures that need to be displayed on different sections on UI for barrel 1
 ```
 
-okay, what is this temp for? We have like 3 or 4 temperatures that need to be displayed on different sections on UI for barrel 1
+Things will be much cleaner if we just store variables straight into the UI variable because the UI variable is stored in the path.
+
+```lua
+-- this is where the data_barrel_1['temp'] goes to. As a path, you can see where the data is being used in UI.
+-- And we can just change the value of the UI variable using gre.set_value(path, value)
+
+gre.set_value(current_conditions_layer.b1card_group.Temp_Measure.text, 0)
+```
+It is just much much better for me to have a path-like thing to let me know what is this variable means to use for.
+
+<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(60).png">
+
+So, 
 
 However, I don't have time to change those cause it is too messy and I am about to return to school soon. So just start to change the structure at the next project.
-
-
 
 # data_IO
 
