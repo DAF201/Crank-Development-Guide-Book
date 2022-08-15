@@ -469,11 +469,41 @@ So basically, you will need to make such a thing somewhere to make a separate ta
 Also, for those extremely complex tasks which take tons of sources and time(>=3s), I will suggest passing them to the backend. Because the backend is created in C language, it will be faster and allows you to use the real threading. With threading, you can create a suspect-inspector model (which is basically a function timeout system. I have trouble remembering things so I prefer a weird name, it helps me distinguish different terms).
 
 Everything below runs in a separate thread from the main thread, and the timer is another separate thread.
+
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/timeout.png">
 
 # data_structure
 
 ----
+
+let me draw a conclusion here. I don't see there is any point to save multiple copies of the same variables around unless you are making a backup or so. For the keypad, if the keypad is designed well, it should have a keypad buffer to store temporary data instead of directly making changes to real value.
+
+now continues with preach, avoid storing global variables unless necessary.
+
+the current data structure of Brix when initialize is just like
+
+current design          |  my opinion
+:-------------------------:|:-------------------------:
+Why are we having a Lua "proxy"? | Just directly read everything to UI
+<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/current_data_structure.drawio.png"> |  <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/ideal_data_structure.drawio.png">
+
+and the current data structure at the data update parts is like
+
+current design          |  my opinion
+:-------------------------:|:-------------------------:
+<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/current_requests_data_structure.drawio.png"> |  <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/ideal_requests_data_structure.drawio.png">
+
+I am really confused about why are we having global tables everywhere, and the over brief naming brought me lots of trouble.
+
+```lua
+data_barrel_1["temp"] = 0
+```
+
+okay, what is this temp for? We have like 3 or 4 temperatures that need to be displayed on different sections on UI for barrel 1
+
+However, I don't have time to change those cause it is too messy and I am about to return to school soon. So just start to change the structure at the next project.
+
+
 
 # data_IO
 
