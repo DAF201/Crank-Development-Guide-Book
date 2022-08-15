@@ -513,7 +513,14 @@ It is just much much better for me to have a path-like thing to let me know what
 
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(60).png">
 
-So, 
+So, just store everything you need in UI application screen, and get and change via
+
+```lua
+--set value
+        gre.set_value(path,value)
+--get value
+        value = gre.get_value(path)
+```
 
 However, I don't have time to change those cause it is too messy and I am about to return to school soon. So just start to change the structure at the next project.
 
