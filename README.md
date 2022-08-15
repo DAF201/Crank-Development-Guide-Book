@@ -466,6 +466,11 @@ test    3        4
 
 So basically, you will need to make such a thing somewhere to make a separate task calling system from the main thread, and register tasks and unregistered tasks from the main base on conditions. This will make life much easier than waiting for a slow/blocking task to go off in the main or make mutiple threads to handle tasks.
 
+Also, for those extremely complex tasks which take tons of sources and time(>=3s), I will suggest passing them to the backend. Because the backend is created in C language, it will be faster and allows you to use the real threading. With threading, you can create a suspect-inspector model (which is basically a function timeout system. I have trouble remembering things so I prefer a weird name, it helps me distinguish different terms).
+
+Everything below runs in a separate thread from the main thread, and the timer is another separate thread.
+<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/timeout.png">
+
 # data_structure
 
 ----
