@@ -341,7 +341,91 @@ I pulled this part out cause I think it is important. STOP adding a bunch of gre
 
 You need to come up with a task management service yourself.
 
-Here is how I made one
+Here is an example of task timer
+
+```lua
+
+--time counter
+local timer_counter = 0;
+
+
+Task_table = {}
+
+--print table
+function dump(o)
+    if type(o) == 'table' then
+        local s = '{ '
+        for k, v in pairs(o) do
+            if type(k) ~= 'number' then
+                k = '"' .. k .. '"'
+            end
+            s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
+        end
+        return s .. '} '
+    else
+        return tostring(o)
+    end
+end
+
+--let this run in a while true in seprate thread or use gre set an interval to it
+function Clock()
+    if timer_counter > 65536 then
+        timer_counter = 0
+    else
+        timer_counter = timer_counter + 1
+
+        if #Task_table == 0 then
+            return
+        else
+            for interval, function_table in pairs(Task_table) do
+                if timer_counter % interval == 0 then
+                    for index, functions_value in pairs(function_table) do
+                        if not pcall(functions_value[1], functions_value[3], functions_value[4], functions_value[5]) then
+                            print("error when running: " .. functions_value[1])
+                        end
+
+                    end
+                end
+            end
+        end
+    end
+end
+
+function Task_register(func, id, interval, args1, args2, args3)
+    if Task_table[interval] == nil then
+        Task_table[interval] = { { func, id, args1, args2, args3 } }
+    else
+        table.insert(Task_table[interval], #Task_table, { func, id, args1, args2, args3 })
+    end
+end
+
+function Task_unregister(id)
+    for interval, function_table in pairs(Task_table) do
+        for index, functions_value in pairs(function_table) do
+            if functions_value[2] == id then
+                table.remove(function_table, index)
+            end
+        end
+    end
+end
+
+--add tasks
+Task_register(print, "print", 1, "test ", "1", " 2")
+Task_register(print, "print2", 1, "test ", "3", " 4")
+
+--windows debug
+while true do
+    Clock()
+    if timer_counter > 10 then
+    
+    --remove tasks
+        Task_unregister("print")
+        
+    end
+    os.execute("powershell sleep 1")
+end
+--end of debug
+```
 
 # data_structure
 
