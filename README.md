@@ -140,7 +140,7 @@ data_app["powerSaverEnd6"] = 0
 data_app["powerSaverEnd7"] = 0
 data_app["powerSaverEnd8"] = 0
 
----why don't make something like
+-- I prefer something like this
 data_app["power_saver"] = {
     { 0, 0 }, --slot 1, first value is start and second value is end
     { 0, 0 }, --slot 2...
@@ -156,6 +156,7 @@ data_app["power_saver"] = {
 
 ```
 
+Also, for those really cost tons of times task, I will suggest pass it to backend and let backend handle that (task time >=3s in my opinion, except internet requests or violent break into a hash). Because backend use a task-inquester
 
 # UI_structure_and_important_concepts
 
@@ -463,7 +464,7 @@ test    3        4
 test    3        4
 ```
 
-So basically, you will need to make such a thing somewhere to make a separate task calling system from the main thread, and register tasks and unregistered tasks from the main base on conditions. This will make life much easier than waiting for a slow/blocking task to go off in the main.
+So basically, you will need to make such a thing somewhere to make a separate task calling system from the main thread, and register tasks and unregistered tasks from the main base on conditions. This will make life much easier than waiting for a slow/blocking task to go off in the main or make mutiple threads to handle tasks.
 
 # data_structure
 
