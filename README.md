@@ -427,6 +427,39 @@ end
 --end of debug
 ```
 
+output
+```lua
+test    3        4
+test    1        2
+test    3        4
+test    1        2
+test    3        4
+test    1        2
+test    3        4
+test    1        2
+test    3        4
+test    1        2
+test    3        4
+test    1        2
+test    3        4
+test    1        2
+test    3        4
+test    1        2
+test    3        4
+test    1        2
+test    3        4
+test    1        2
+test    3        4
+test    1        2
+test    3        4
+test    3        4
+test    3        4
+test    3        4
+test    3        4
+test    3        4
+test    3        4
+test    3        4
+```
 # data_structure
 
 ----
