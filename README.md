@@ -521,6 +521,10 @@ So, just store everything you need in UI application screen, and get and change 
 --get value
         value = gre.get_value(path)
 ```
+But for table, just try to reduce usage of global tables and name them clearly, save yourself and others time.
+
+yes, it can save table too, but save table in lua is much easier
+<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(61).png">
 
 However, I don't have time to change those cause it is too messy and I am about to return to school soon. So just start to change the structure at the next project.
 
