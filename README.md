@@ -451,7 +451,7 @@ test    3        4
 test    1        2
 test    3        4
 test    1        2
-test    3        4
+test    3        4 --I unregisted print("test", 1, 2) after a certain times of calling
 test    3        4
 test    3        4
 test    3        4
