@@ -22,6 +22,7 @@ I am not here to teach you Lua, and I will assume you are familiar with Lua synt
 6. Try to avoid using some APIs, they are slow (namely, gre.timer_set_interval).
 7. It cannot print to the serial ports or ssh, you need to make your own print function.
 8. unpack does not work correctly on crank Lua, which means function(...) will not work correctly
+9. I cannot guarantee you will get everything to work right the way after reading this. This is just meant to point out some important things you need to be aware of/keep in mind, to make the project overall stronger than patching everywhere.
 
 # table of contents:
 1. [some thing general](#something_general)
