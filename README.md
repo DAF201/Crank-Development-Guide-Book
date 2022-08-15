@@ -451,7 +451,7 @@ test    3        4
 test    1        2
 test    3        4
 test    1        2
-test    3        4 --I unregisted print("test", 1, 2) after a certain times of calling
+test    3        4 --I unregistered print("test", 1, 2) after a certain times of calling
 test    3        4
 test    3        4
 test    3        4
@@ -460,6 +460,9 @@ test    3        4
 test    3        4
 test    3        4
 ```
+
+So basically, you will need to make such a thing somewhere to make a separate task calling system from the main thread, and register tasks and unregistered tasks from the main base on conditions. This will make life much easier than waiting for a slow/blocking task to go off in the main.
+
 # data_structure
 
 ----
