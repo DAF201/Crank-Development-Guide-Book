@@ -345,6 +345,8 @@ Here is an example of task timer
 
 ```lua
 
+-- this is a time based task table. you can make a id based table too, that will be easier but a litt bit slower than time based
+
 --time counter
 local timer_counter = 0;
 
