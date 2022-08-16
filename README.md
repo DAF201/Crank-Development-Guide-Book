@@ -611,7 +611,8 @@ I said it is just like MQTT cause when you are trying to send data to the backen
 
 With this structure, UI and backend are separate from each other. The UI only needs to send the outgoing event to the channel and do the next thing. It does not have to wait until the backend finishes the event and returns a result. Instead, it has a built-in event listener which listens for the incoming events and triggers callback functions.
 
-
+This incoming modbus_ret event will trigger the Lua function "modbus_return" and pass the whole event to it as parameter.
+![image](./src/Screenshot%20(63).png)
 
 # free_components
 ----
