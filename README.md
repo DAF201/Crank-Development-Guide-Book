@@ -1,13 +1,20 @@
 # Crank Development Guide Book
+
 > @DAF201
 > 
 > [Email me](mailto:DAF201@blink-in.com)
 >
 > Find me in the UTD library 3rd-floor self-study section near the network bookshelves if you need (I am a college student)
+
+
 # foreword
+
 ----
+
 I am not here to teach you Lua, and I will assume you are familiar with Lua syntax, keywords, style, and grammar... Below, I will only go over things I found important, for other parts like metrics, connectors, and two searches in SDK, I will not explain how to use them. Also, before you start reading the remaining parts, you need to know:
+
 ----
+
 1. The case sensitive is the difference between the simulator and the actual machine, don't name something like "variable = 0, VARIABLE = 1". It will not run correctly on an actual machine, and your co-works will want to punch you for sure.
 2. When you found you are copying and pasting a chunk of code, stop and think about it.
 3. When you found your function is longer than a screen, stop and think about it.
@@ -18,17 +25,8 @@ I am not here to teach you Lua, and I will assume you are familiar with Lua synt
 8. unpack does not work correctly on crank Lua, which means function(...) will not work correctly
 
 # table of contents:
+
 1. [some thing general](#something_general)
-
-    
-          
-            
-    
-
-          
-    
-    
-  
 2. [UI structure and some important concepts](#UI_structure_and_important_concepts)
 3. [system init](#system_init)
 4. [customized functions](#customized_functions)
@@ -37,22 +35,39 @@ I am not here to teach you Lua, and I will assume you are familiar with Lua synt
 7. [data_IO](#data_IO)
 8. [some components](#free_components)
 # something_general
+
 ----
+
 First of all, Crank is an embedded UI SDK. It allows you to make embedded projects much easier than hand writes every line of code. However, even if you don't have to hand write every line of code, it is still very important to keep the remaining parts "modular", "abstract", and "low coupling".
+
 ## keep things separate
+
 For example, you have an update everything function that reads data from an external source, saves those data to variables, and displays those data on the screen. This function will be called every second.
+
 Assume for some reason, a piece of data replay took very long. In this case, the function will be stuck on this piece of data, and the remaining data and updates will be stuck too.
+
 A better solution is to separate fetch data, save data, and update screens into three functions, and use a timer to regulate them. (which is pretty much impossible in Lua cause Lua does not support threading. luckily, the event callback trigger is by the UI engine, you don't need to worry about when is the event going to come back).
+
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/module.png">
+
 (this may not be a good example but just an general idea about what to do and what not to do)
+
 ## don't repeat yourself
+
 Additionally, there is no sense to make a function for every button with similar outputs. For example, there are six values on the screen, and each of them has an add/sub button near it. There is no sense to write 12 functions such as value_1_add, value_1_sub, and value_2_add... instead, just make value_change(value_path, operation, amount), where value_path represents which value you want to change, and operation represents add/subtract, the amount represents how many you want to add/subtract to it.
+
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/generalize.png">
+
 (no one wants to see 12 functions doing the same thing with different "GLOBAL VARIABLES" within them)
+
 Trust me, no one wants to read such a thing. You are not here to enum out all possible results
+
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(33).png">
+
 ## clarity is everything
+
 Naming is a super important part of software programming. A well-named variable/function should be clear and short if the condition allows. The long long name is acceptable as long as the purpose is clear and easy to understand. Also, it is okay to name something pathlike if necessary.
+
 ```lua
 -- this function will be called when the application starts
 function AppStart(mpargs)
@@ -86,7 +101,9 @@ action_register_map = {
 function heartbeat_status_check()
 end
 ```
+
 Some bad naming examples, which will cause your co-workers' blood pressure to raise sky high
+
 ```lua
 -- okay what is CB? your naming is not a standard or universal common sense
 function CBInit(mapargs)
@@ -122,36 +139,66 @@ data_app["power_saver"] = {
 }
 -- for those highly related things, just put them in an array or table
 ```
+
 Also, for those really cost tons of times task, I will suggest pass it to backend and let backend handle that (task time >=3s in my opinion, except internet requests or violent break into a hash). Because backend use a task-inquester
+
 # UI_structure_and_important_concepts
+
 ----
+
 Before moving on, there is another very important part you need to be very familiar with, the structure of the UI.
+
 A basic view of the structure of the UI should be just like below
+
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/UI_structure.png">
+
 It looks very complex, but we don't need to get into every single part of it, only those important parts.
+
 ### screen
+
 Yes, a screen is a screen, a whole screen. Your full screen will be filled with the items on the screen you are at.
+
 ### layer 
+
 A section on the screen, and you can have as many layers as you need on the same screen. However, layers will overlap with each other. The layer on the top will cover the layer at the bottom, which will result in you can only see the layer on top. In addition, the layer can be larger than the screen size, but only the section within the screen will be displayed. (also the layers are shared between screens, so you can't have two layers with the same name but doing different things)
 the larger part is the screen, the smaller part is the layer belong to this screen
+
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(34).png">
+
 ### control
+
 Then here comes the important part, that controls, the smallest unit you must have to display something or do something by touching the screen (you cannot just have an image on screen).
+
 just like layers belong to the screen, and control must have a layer, and it will follow the display status of the layer (which means if you hide the layer, all controls belonging to this layer will be "hide" even if they are set to "show").
+
 For each control, to display something, you will need to add "render extension", then we can start inserting elements (mostly images or text).
+
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(37).png">
+
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(38).png">
+
 ### variable
+
 As it's named, it is a variable, and it can store a value of its type. However, this is one of the most important parts of the whole article, because it is the channel connecting the UI display, data, and external source. (it may belong to the application itself also rather than control only)
+
 For each image or text in a control, we can assign a variable to it, and its display will automatically change with the variable. Each element can only be linked to one variable, but the same variable may be linked to many different elements (just like a function, each x only has one and only one y, but a y can have many x).
+
 Below is how to link a variable to an element
+
 Click on the eye-like button, click create a variable
+
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(39).png">
+
 Assign a value to it (optional, but suggested cause you want something like default value to display when the connection is down)
+
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(40).png">
+
 Then you will see a variable under the value of the element and within the control.
+
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(42).png">
+
 Why is the UI variable so important? Because you can get/modify this variable using Lua APIs and a varible path, the UI display will also change at the same time.
+
 ```lua
 -- get value from this path
 gre.get_value(string_value_path)
@@ -160,21 +207,35 @@ gre.set_value(string_value_path, any_type_value_that_match)
 -- image value is a string relative path that points to an image in the current project's images folder 
 -- ./images/image_name.img_type (project_folder/images/image_you_want)
 ```
+
 Also, trying to display nil (Null, None, nptr, just such thing in other languages) will cause the system to crash, so value check before the pass in.
+
 ### action
+
 An action is something to do when an event happens (On the UI side, mostly touch, press, release, the application started, or such internal events. We will talk about the custom events in the data IO section).
+
 When an action is triggered by an event, it will do something. It can play an animation, change a variable, jump to another screen, call a Lua function, and many others things. Most of the time, we will only use those I mentioned.
+
 below is an example of a press action, it will call the Lua function hello_world when I click on the control (which is the image after the application start)
+
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(43).png">
+
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(44).png">
+
 <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(45).png">
+
 you can also make it trigger by other events or doing other things
+
 ### event
+
 The event is a concept of the happening of something. An event will have its name, data type, and data. Event has three types, self event, incoming event, and outgoing events.
  
 A self event is something that happened to the application or screen. An example is the press event. In most cases, we only need small parts of the self-events, and mostly for buttons. commonly used self events include :"touch", "press", "release", "application start", and "screen show".
+
 An incoming event is an event that comes from outside of the application. The main purpose of this type of event is to update data or execute external commands.
+
 An outgoing event is an event that sends out from the application. The main purpose of this type of event is to make changes to an external source or let an external source execute commands.
+
 we will talk about incoming and outgoing events in detail in data_IO.
 add custom event
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(46).png">
@@ -427,12 +488,7 @@ gre.set_value("backend_version", "08/15/2022" )
 ```lua
 gre.get_value("backend_version")
 ```
-<<<<<<< HEAD
 to take variables out from UI. And if we just directly bind this UI variable to display, we can directly change the value displayed on screen which should be 08/15/2022 now.
-=======
-to take variables out from UI. And if we just directly bind this UI variable to display, we can directly change the value displayed on screen which should be 08/15/22 now.
-
->>>>>>> parent of 53ea81a (Update README.md)
 # data_IO
 ----
 # free_components
