@@ -506,15 +506,15 @@ the current data structure of Brix when initialize is just like
 current design          |  my opinion
 :-------------------------:|:-------------------------:
 Why are we having a Lua "proxy"? | Just directly read everything to UI
-<!-- <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/current_data_structure.drawio.png"> |  <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/ideal_data_structure.drawio.png"> -->
 ![image](./src/current_data_structure.drawio.png)|![image](./src/ideal_data_structure.drawio.png)
+<!-- <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/current_data_structure.drawio.png"> |  <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/ideal_data_structure.drawio.png"> -->
 
 and the current data structure at the data update parts is like
 
 current design          |  my opinion
 :-------------------------:|:-------------------------:
-<!-- <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/current_requests_data_structure.drawio.png"> |  <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/ideal_requests_data_structure.drawio.png"> -->
 ![image](./src/current_requests_data_structure.drawio.png)|![image](./src/ideal_requests_data_structure.drawio.png)
+<!-- <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/current_requests_data_structure.drawio.png"> |  <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/ideal_requests_data_structure.drawio.png"> -->
 
 I am really confused about why are we having global tables everywhere, and the over brief naming brought me lots of trouble.
 
