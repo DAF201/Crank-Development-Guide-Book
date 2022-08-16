@@ -603,7 +603,15 @@ to take variables out from UI. And if we just directly bind this UI variable to 
 # data_IO
 ----
 
-The IO system of the Crank is just like a 
+The IO system of the Crank is like MQTT in my opinion. The way the communication system work like below (They call it modbus).
+
+![image](./src/communication_structure.drawio.png)
+
+I said it is just like MQTT cause when you are trying to send data to the backend from UI, you are actually letting UI send an "event" to the Channel, and the backend will get the event out from the channel, which is just like the "publish-subscribe" of MQTT.
+
+With this structure, UI and backend are separate from each other. The UI only needs to send the outgoing event to the channel and do the next thing. It does not have to wait until the backend finishes the event and returns a result. Instead, it has a built-in event listener which listens for the incoming events and triggers callback functions.
+
+
 
 # free_components
 ----
