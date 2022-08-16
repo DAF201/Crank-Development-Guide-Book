@@ -237,21 +237,37 @@ An incoming event is an event that comes from outside of the application. The ma
 An outgoing event is an event that sends out from the application. The main purpose of this type of event is to make changes to an external source or let an external source execute commands.
 
 we will talk about incoming and outgoing events in detail in data_IO.
+
 add custom event
+
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(46).png">
+
 # system_init
+
 ----
+
 Now we are moving on to the system initialization section, below is the process of the system initialization I redesigned for [brix](https://github.com/DAF201/intern_2022/tree/main/brix).
+
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/system_init.png">
+
 The main purpose of the system initialization is to ensure the UI is displaying correctly, and the services are started.
+
 As people always say, "a good beginning is half done", as the entrance of the application, the system initialization is one of the most important parts. The structure of the initialization directly influences the efficiency of the application when running.
+
 The initialization can be split into two parts, the data update and the start-up of the service. 
+
 Date updates include screen updates and variable updates. Screen update is updating the status of the screen, such as which screen should we go to when the application starts, which part of the screen should be shown, and which parts of the screen should be hidden (even we can set those in UI, sometimes we still need some curtain like things to show on application start, but we don't want curtain to block our eyesight when developing). The variable update is changing the variables stored in the controls or application, which will change the display on the screen or let Lua get different data later (which usually makes no sense, except for some flag variables stored in the application. Cause mostly those variables are used and manipulated by services).
+
 Then we have the service start up. Service is not a concept defined by the crank, instead, it is my personal defined concept. According to my definition, a service is a separately running function from the main thread that provides a service for the main thread. Crank Lua does not support coroutine or threading, but it has something similar Actually Lua itself does not support threading at all. Why do I mention this? Because the crank provides some C APIs to do that (Looks like C but I can not guarantee how the crank made those).
+
 Like before, I am going to provide some examples of the services. 
+
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/service.drawio.png">
+
 The timer service is a function that runs separately from the main thread. It will fetch all the tasks being registered in the task table from the main thread or other services, and execute the task by the time it reaches the task's schedule. After each execution, it will check if the task is a repeating task. If not, it will unregister this task from the task table.
+
 A funny fact, the crank has build in timer and threading by it self, which are: 
+
 ``` lua
 -- make an function execute every interval ms
 id = gre.timer_set_interval(interval,function)
@@ -260,35 +276,56 @@ gre.timer_clear_interval(id)
 -- create a thread
 gre.thread_create(function)
 ```
+
 However, I will say use those APIs as less as possible. Those built-in threading will slow down the application. The creation of new thread costs, the switches between threads costs, and the running of threading costs. There are costs everywhere when you have too many threads. When I got the Brix, every timed function was called by the "gre.timer_set_interval", and the system was quite slow (the communication part took very long to react, the events were lost some time, and the clock was not loaded correctly sometimes). Later, I decided to rewrite the structure, then I have the structure above (But I will still say keep only necessary parts, I intergraded other services such as heartbeat service which check communication status as tasks into registered tasks to speed it up). 
+
 # customized_functions
+
 ----
+
 Finally, we reached the coding part, so let's start with a hello world.
+
 Suddenly, you realize: "where in the world am I going to put my functions?" The SDK doesn't look like a text editor at all.
+
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(47).png">
+
 So let's start from zero to one.
+
 Firstly, we always want to have a function that starts when the application starts. So we go to the application, right-click the project, click add action
+
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(50).png">
+
 Then, we select event: application start, action: Lua script, and type in "app_start" as function name, then click "edit"
+
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(51).png">
+
 It will say something like the function does not exist, do you want to create it? click yes, then you will see it create a "callback.lua" with a
+
 ```lua
 --- @param gre#context mapargs
 function app_start(mapargs)
 --TODO: Your code goes here...
 end
 ```
+
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(53).png">
+
 we change it to
+
 ```lua
 function app_start(mapargs)
     print("hello world")
 end
 ```
+
 Now we can test the code, after we got an entrance. It will print a "Hello world" on console when application starts (right bottom).
+
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(52).png">
+
 And we can start with building out system initialization and services with this entrance. You will start your system initialization and services startup from this app_start function (Still structure is important, don't put everything together [[to my system init]](#system_init)).
+
 For those custom functions, you can put them all in this "call_back.lua" (which you shouldn't), or right-click on the script section, new to create a new script. However, you need to add a requirement in "callback.lua" to access them since "callback.lua" is the only entrance.
+
 ```lua
 -- I created a test.lua with a test_function_from_test_dot_lua function inside it
 test=require("test")
@@ -297,14 +334,23 @@ function app_start(mapargs)
     print("hello world")
 end
 ```
+
 Then you can access your function via events such as button touch manually to interact with the user.
+
 you can go to the project path, scripts folder, and create scripts manually but what is the point of doing that...
+
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(55).png">
+
 # task_table
+
 ----
+
 I pulled this part out cause I think it is important. STOP adding a bunch of gre.timer_set_interval or gre.thread_create (this thing doesn't even support arguments)
+
 You need to come up with a task management service yourself. The quality of this part will directly influence the overall premormance.
+
 Here is an example of task timer
+
 ```lua
 -- this is a time based task table. you can make a id based table too, that will be easier but a litt bit slower than time based
 --time counter
@@ -411,46 +457,70 @@ test    3        4
 test    3        4
 test    3        4
 ```
+
 So basically, you will need to make such a thing somewhere to make a separate task calling system from the main thread, and register tasks and unregistered tasks from the main base on conditions. This will make life much easier than waiting for a slow/blocking task to go off in the main or make mutiple threads to handle tasks.
+
 Also, for those extremely complex tasks which take tons of sources and time(>=3s), I will suggest passing them to the backend. Because the backend is created in C language, it will be faster and allows you to use the real threading. With threading, you can create a suspect-inspector model (which is basically a function timeout system. I have trouble remembering things so I prefer a weird name, it helps me distinguish different terms).
+
 Everything below runs in a separate thread from the main thread, and the timer is another separate thread.
+
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/timeout.png">
+
 # data_structure
+
 ----
+
 let me draw a conclusion here. I don't see there is any point to save multiple copies of the same variables around unless you are making a backup or so. For the keypad, if the keypad is designed well, it should have a keypad buffer to store temporary data instead of directly making changes to real value.
+
 now continues with preach, avoid storing global variables unless necessary.
+
 the current data structure of Brix when initialize is just like
+
 current design          |  my opinion
 :-------------------------:|:-------------------------:
 Why are we having a Lua "proxy"? | Just directly read everything to UI
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/current_data_structure.drawio.png"> |  <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/ideal_data_structure.drawio.png">
+
 and the current data structure at the data update parts is like
+
 current design          |  my opinion
 :-------------------------:|:-------------------------:
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/current_requests_data_structure.drawio.png"> |  <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/ideal_requests_data_structure.drawio.png">
+
 I am really confused about why are we having global tables everywhere, and the over brief naming brought me lots of trouble.
+
 ```lua
 data_barrel_1["temp"] = 0
 --okay, what is this temp for? We have like 3 or 4 temperatures that need to be displayed on different sections on UI for barrel 1
 ```
+
 Things will be much cleaner if we just store variables straight into the UI variable because the UI variable is stored in the path.
+
 ```lua
 -- this is where the data_barrel_1['temp'] goes to. As a path, you can see where the data is being used in UI.
 -- And we can just change the value of the UI variable using gre.set_value(path, value)
 gre.set_value(current_conditions_layer.b1card_group.Temp_Measure.text, 0)
 ```
+
 It is just much much better for me to have a path-like thing to let me know what is this variable means to use for.
+
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(60).png">
+
 So, just store everything you need in UI application screen, and get and change via
+
 ```lua
 --set value
         gre.set_value(path,value)
 --get value
         value = gre.get_value(path)
 ```
+
 But for table, just try to reduce usage of global tables and name them clearly, save yourself and others time.
+
 Yes, it can save table too, but save table in lua is much easier.
+
 Also, use a table for variables highly associated to save yourself and others time, because the table is more organized and easier to use when looping.
+
 ```lua
 -- use table 
 barrel_data = {
@@ -474,21 +544,30 @@ barrel_4_h2o = 0
 barrel_4_pressure = 0
 -- to make things more organized and easier to use for looping
 ```
+
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(61).png">
+
 However, I don't have time to change those cause it is too messy and I am about to return to school soon. So just start to change the structure at the next project.
 A short example of what I am talking about:
+
 1. I have a variable Backend version I need to store a "08/15/2022" to it when initializing
 2. I create a string variable in UI called Backend_version
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(62).png">
+
 3. I copy the path of the UI variable and store the value to it using
+
 ```lua
 gre.set_value("backend_version", "08/15/2022" )
 ```
+
 4. Next time, when I need to use the backend version data, such as update screen display, I use
+
 ```lua
 gre.get_value("backend_version")
 ```
+
 to take variables out from UI. And if we just directly bind this UI variable to display, we can directly change the value displayed on screen which should be 08/15/2022 now.
+
 # data_IO
 ----
 # free_components
