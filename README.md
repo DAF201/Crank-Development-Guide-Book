@@ -23,6 +23,8 @@ I am not here to teach you Lua, and I will assume you are familiar with Lua synt
 6. Try to avoid using some APIs, they are slow (namely, gre.timer_set_interval).
 7. It cannot print to the serial ports or ssh, you need to make your own print function.
 8. unpack does not work correctly on crank Lua, which means function(...) will not work correctly
+9. I cannot guarantee you will know how to make things work after reading, but this will help with making the project more flexible and stronger if you need to add new features in the future.
+10. Try to make all the UI changes on the UI side using variable flags and binding, it is really complex on the Lua side to make UI changes.
 
 # table of contents:
 
