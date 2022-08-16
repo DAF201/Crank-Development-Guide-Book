@@ -533,7 +533,8 @@ gre.set_value(current_conditions_layer.b1card_group.Temp_Measure.text, 0)
 
 It is just much much better for me to have a path-like thing to let me know what is this variable means to use for.
 
-<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(60).png">
+<!-- <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(60).png"> -->
+![image](./src/Screenshot%20(60).png)
 
 So, just store everything you need in UI application screen, and get and change via
 
@@ -574,14 +575,16 @@ barrel_4_pressure = 0
 -- to make things more organized and easier to use for looping
 ```
 
-<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(61).png">
+<!-- <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(61).png"> -->
+![image](./src/Screenshot%20(61).png)
 
 However, I don't have time to change those cause it is too messy and I am about to return to school soon. So just start to change the structure at the next project.
 A short example of what I am talking about:
 
 1. I have a variable Backend version I need to store a "08/15/2022" to it when initializing
 2. I create a string variable in UI called Backend_version
-<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(62).png">
+<!-- <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(62).png"> -->
+![image](./src/Screenshot%20(62).png)
 
 3. I copy the path of the UI variable and store the value to it using
 
