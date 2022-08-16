@@ -427,7 +427,12 @@ gre.set_value("backend_version", "08/15/2022" )
 ```lua
 gre.get_value("backend_version")
 ```
+<<<<<<< HEAD
 to take variables out from UI. And if we just directly bind this UI variable to display, we can directly change the value displayed on screen which should be 08/15/2022 now.
+=======
+to take variables out from UI. And if we just directly bind this UI variable to display, we can directly change the value displayed on screen which should be 08/15/22 now.
+
+>>>>>>> parent of 53ea81a (Update README.md)
 # data_IO
 ----
 # free_components
