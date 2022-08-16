@@ -22,7 +22,6 @@ I am not here to teach you Lua, and I will assume you are familiar with Lua synt
 6. Try to avoid using some APIs, they are slow (namely, gre.timer_set_interval).
 7. It cannot print to the serial ports or ssh, you need to make your own print function.
 8. unpack does not work correctly on crank Lua, which means function(...) will not work correctly
-9. I cannot guarantee you will get everything to work right the way after reading this. This is just meant to point out some important things you need to be aware of/keep in mind, to make the project overall stronger than patching everywhere.
 
 # table of contents:
 1. [some thing general](#something_general)
@@ -522,61 +521,20 @@ So, just store everything you need in UI application screen, and get and change 
 --get value
         value = gre.get_value(path)
 ```
-But for table, just try to reduce usage of global tables and name them clearly, save yourself and others time.
+But for tables, just try to reduce the usage of global tables and name them clearly, save yourself and others time.
 
-Yes, it can save table too, but save table in lua is much easier.
-
-Also, use a table for variables highly associated to save yourself and others time, because the table is more organized and easier to use when looping.
-
+yes, it can save tables too, but store tables in Lua are much easier. Try using a local table instead of a global table, try to store a table in another larger table to make things organized, try to store associated variables in a table as data instead of making them stand-alone variables.
 ```lua
--- use table 
+barrel_1_co2=0
+barrel_1_h2o=0
+barrel_1_pressure=0
+...
 
-barrel_data = {
-    { 0, 0, 0 }, --barrel_1 : {co2 , h2o , pressure}
-    { 0, 0, 0 }, --barrel_2 : {co2 , h2o , pressure}
-    { 0, 0, 0 }, --...
-    { 0, 0, 0 }
-}
 
--- instead of 
-
-barrel_1_co2 = 0
-barrel_1_h2o = 0
-barrel_1_pressure = 0
-
-barrel_2_co2 = 0
-barrel_2_h2o = 0
-barrel_2_pressure = 0
-
-barrel_3_co2 = 0
-barrel_3_h2o = 0
-barrel_3_pressure = 0
-
-barrel_4_co2 = 0
-barrel_4_h2o = 0
-barrel_4_pressure = 0
-
--- to make things more organized and easier to use for looping
 ```
 <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(61).png">
 
 However, I don't have time to change those cause it is too messy and I am about to return to school soon. So just start to change the structure at the next project.
-
-A short example of what I am talking about:
-
-1. I have a variable Backend version I need to store a "08/15/2022" to it when initializing
-2. I create a string variable in UI called Backend_version
-<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(62).png">
-
-3. I copy the path of the UI variable and store the value to it using
-```lua
-gre.set_value("backend_version", "08/15/2022" )
-```
-4. Next time, when I need to use the backend version data, such as update screen display, I use
-```lua
-gre.get_value("backend_version")
-```
-to take variables out from UI. And if we just directly bind this UI variable to display, we can directly change the value displayed on screen which should be 08/15/2022 now.
 
 # data_IO
 
