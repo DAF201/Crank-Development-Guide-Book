@@ -53,7 +53,7 @@ Assume for some reason, a piece of data replay took very long. In this case, the
 A better solution is to separate fetch data, save data, and update screens into three functions, and use a timer to regulate them. (which is pretty much impossible in Lua cause Lua does not support threading. luckily, the event callback trigger is by the UI engine, you don't need to worry about when is the event going to come back).
 
 <!-- <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/module.png"> -->
-![image info](./src/module.png)
+![image](./src/module.png)
 
 (this may not be a good example but just an general idea about what to do and what not to do)
 
@@ -61,13 +61,15 @@ A better solution is to separate fetch data, save data, and update screens into 
 
 Additionally, there is no sense to make a function for every button with similar outputs. For example, there are six values on the screen, and each of them has an add/sub button near it. There is no sense to write 12 functions such as value_1_add, value_1_sub, and value_2_add... instead, just make value_change(value_path, operation, amount), where value_path represents which value you want to change, and operation represents add/subtract, the amount represents how many you want to add/subtract to it.
 
-<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/generalize.png">
+<!-- <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/generalize.png"> -->
+![image](./src/generalize.png)
 
 (no one wants to see 12 functions doing the same thing with different "GLOBAL VARIABLES" within them)
 
 Trust me, no one wants to read such a thing. You are not here to enum out all possible results
 
-<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(33).png">
+<!-- <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(33).png"> -->
+![image](./src/Screenshot%20(33).png)
 
 ## clarity is everything
 
@@ -155,7 +157,8 @@ Before moving on, there is another very important part you need to be very famil
 
 A basic view of the structure of the UI should be just like below
 
-<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/UI_structure.png">
+<!-- <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/UI_structure.png"> -->
+![image](./src/UI_structure.png)
 
 It looks very complex, but we don't need to get into every single part of it, only those important parts.
 
@@ -168,7 +171,8 @@ Yes, a screen is a screen, a whole screen. Your full screen will be filled with 
 A section on the screen, and you can have as many layers as you need on the same screen. However, layers will overlap with each other. The layer on the top will cover the layer at the bottom, which will result in you can only see the layer on top. In addition, the layer can be larger than the screen size, but only the section within the screen will be displayed. (also the layers are shared between screens, so you can't have two layers with the same name but doing different things)
 the larger part is the screen, the smaller part is the layer belong to this screen
 
-<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(34).png">
+<!-- <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(34).png"> -->
+![image](./src/Screenshot%20(34).png)
 
 ### control
 
@@ -178,9 +182,11 @@ just like layers belong to the screen, and control must have a layer, and it wil
 
 For each control, to display something, you will need to add "render extension", then we can start inserting elements (mostly images or text).
 
-<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(37).png">
+<!-- <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(37).png"> -->
+![image](./src/Screenshot%20(37).png)
 
-<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(38).png">
+<!-- <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(38).png"> -->
+![image](./src/Screenshot%20(38).png)
 
 ### variable
 
@@ -192,15 +198,18 @@ Below is how to link a variable to an element
 
 Click on the eye-like button, click create a variable
 
-<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(39).png">
+<!-- <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(39).png"> -->
+![image](./src/Screenshot%20(39).png)
 
 Assign a value to it (optional, but suggested cause you want something like default value to display when the connection is down)
 
-<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(40).png">
+<!-- <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(40).png"> -->
+![image](./src/Screenshot%20(40).png)
 
 Then you will see a variable under the value of the element and within the control.
 
-<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(42).png">
+<!-- <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(42).png"> -->
+![image](./src/Screenshot%20(42).png)
 
 Why is the UI variable so important? Because you can get/modify this variable using Lua APIs and a varible path, the UI display will also change at the same time.
 
