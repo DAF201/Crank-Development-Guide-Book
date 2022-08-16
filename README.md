@@ -232,11 +232,14 @@ When an action is triggered by an event, it will do something. It can play an an
 
 below is an example of a press action, it will call the Lua function hello_world when I click on the control (which is the image after the application start)
 
-<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(43).png">
+<!-- <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(43).png"> -->
+![image](./src/Screenshot%20(43).png)
 
-<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(44).png">
+<!-- <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(44).png"> -->
+![image](./src/Screenshot%20(44).png)
 
-<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(45).png">
+<!-- <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(45).png"> -->
+![image](./src/Screenshot%20(45).png)
 
 you can also make it trigger by other events or doing other things
 
@@ -254,7 +257,8 @@ we will talk about incoming and outgoing events in detail in data_IO.
 
 add custom event
 
-<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(46).png">
+<!-- <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(46).png"> -->
+![image](./src/Screenshot%20(46).png)
 
 # system_init
 
@@ -262,7 +266,8 @@ add custom event
 
 Now we are moving on to the system initialization section, below is the process of the system initialization I redesigned for [brix](https://github.com/DAF201/intern_2022/tree/main/brix).
 
-<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/system_init.png">
+<!-- <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/system_init.png"> -->
+![image](./src/system_init.png)
 
 The main purpose of the system initialization is to ensure the UI is displaying correctly, and the services are started.
 
@@ -276,7 +281,8 @@ Then we have the service start up. Service is not a concept defined by the crank
 
 Like before, I am going to provide some examples of the services. 
 
-<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/service.drawio.png">
+<!-- <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/service.drawio.png"> -->
+![image](./src/service.drawio.png)
 
 The timer service is a function that runs separately from the main thread. It will fetch all the tasks being registered in the task table from the main thread or other services, and execute the task by the time it reaches the task's schedule. After each execution, it will check if the task is a repeating task. If not, it will unregister this task from the task table.
 
@@ -301,17 +307,20 @@ Finally, we reached the coding part, so let's start with a hello world.
 
 Suddenly, you realize: "where in the world am I going to put my functions?" The SDK doesn't look like a text editor at all.
 
-<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(47).png">
+<!-- <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(47).png"> -->
+![image](./src/Screenshot%20(47).png)
 
 So let's start from zero to one.
 
 Firstly, we always want to have a function that starts when the application starts. So we go to the application, right-click the project, click add action
 
-<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(50).png">
+<!-- <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(50).png"> -->
+![image](./src/Screenshot%20(50).png)
 
 Then, we select event: application start, action: Lua script, and type in "app_start" as function name, then click "edit"
 
-<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(51).png">
+<!-- <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(51).png"> -->
+![image](./src/Screenshot%20(51).png)
 
 It will say something like the function does not exist, do you want to create it? click yes, then you will see it create a "callback.lua" with a
 
@@ -322,7 +331,8 @@ function app_start(mapargs)
 end
 ```
 
-<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(53).png">
+<!-- <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(53).png"> -->
+![image](./src/Screenshot%20(53).png)
 
 we change it to
 
@@ -334,7 +344,8 @@ end
 
 Now we can test the code, after we got an entrance. It will print a "Hello world" on console when application starts (right bottom).
 
-<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(52).png">
+<!-- <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(52).png"> -->
+![image](./src/Screenshot%20(52).png)
 
 And we can start with building out system initialization and services with this entrance. You will start your system initialization and services startup from this app_start function (Still structure is important, don't put everything together [[to my system init]](#system_init)).
 
@@ -353,7 +364,8 @@ Then you can access your function via events such as button touch manually to in
 
 you can go to the project path, scripts folder, and create scripts manually but what is the point of doing that...
 
-<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(55).png">
+<!-- <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(55).png"> -->
+![image](./src/Screenshot%20(55).png)
 
 # task_table
 
@@ -478,7 +490,8 @@ Also, for those extremely complex tasks which take tons of sources and time(>=3s
 
 Everything below runs in a separate thread from the main thread, and the timer is another separate thread.
 
-<img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/timeout.png">
+<!-- <img src="https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/timeout.png"> -->
+![image](./src/timeout.png)
 
 # data_structure
 
