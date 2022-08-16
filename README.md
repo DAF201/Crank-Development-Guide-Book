@@ -52,7 +52,8 @@ Assume for some reason, a piece of data replay took very long. In this case, the
 
 A better solution is to separate fetch data, save data, and update screens into three functions, and use a timer to regulate them. (which is pretty much impossible in Lua cause Lua does not support threading. luckily, the event callback trigger is by the UI engine, you don't need to worry about when is the event going to come back).
 
-<img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/module.png">
+<!-- <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/module.png"> -->
+![image info](./src/module.png)
 
 (this may not be a good example but just an general idea about what to do and what not to do)
 
@@ -574,5 +575,12 @@ to take variables out from UI. And if we just directly bind this UI variable to 
 
 # data_IO
 ----
+
+The IO system of the Crank is just like a 
+
 # free_components
+----
+
+
+# modules
 ----
