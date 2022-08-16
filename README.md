@@ -6,6 +6,7 @@
 >
 > Find me in the UTD library 3rd-floor self-study section near the network bookshelves if you need (I am a college student)
 
+# if you are here to find how to use my modules such as Modbus or keypad, go to the last section directly.
 
 # foreword
 
@@ -36,6 +37,7 @@ I am not here to teach you Lua, and I will assume you are familiar with Lua synt
 6. [data_structure](#data_structure)
 7. [data_IO](#data_IO)
 8. [some components](#free_components)
+9. [how to use my modules](#modules)
 # something_general
 
 ----
