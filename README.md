@@ -1195,3 +1195,7 @@ For posting, currently, all of them were embedded in the keypad. If you want to 
 -- type: 0 int, 1 string
 modbus_post(address, size, type, data)
 ```
+
+4. Heartbeat
+
+Dont worry about about this part yet. When you need it indeed, copy everything associated from callback and modbus_event of brix and change some parameter.
