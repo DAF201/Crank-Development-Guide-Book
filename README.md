@@ -1051,5 +1051,29 @@ end
 
 ```
 
+A framework of backend with event timeout(unfinished):
+
+[backend framework](https://github.com/DAF201/intern_2022/tree/main/backend%20framework)
+
+
+Update script(usb manually update is slow):
+
+```python
+
+# you need to add "os.execute('ifconfig eth0 192.168.1.222 netmask 255.255.255.0')" in Lua init
+
+from os import listdir,system
+from os.path import isfile, join
+from glob import glob
+ip="192.168.1.222"
+system("ping %s"%ip)
+path="C:\Develop\Storyboard\Projects\Brix\export\scripts"
+files = [files for files in listdir(path) if isfile(join(path, files))]
+for file in files:
+    system("scp %s/%s root@%s:/opt/middleby/brix/scripts"%(path,file,ip))#linux path
+for file in glob("C:\Develop\Storyboard\Projects\Brix\export\*.gapp"):
+    system("scp %s root@%s:/opt/middleby/brix/"%(file,ip))
+system("ssh root@%s"%ip)
+```
 # modules
 ----
