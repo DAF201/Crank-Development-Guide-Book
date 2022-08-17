@@ -754,7 +754,8 @@ function modbus_return(mapargs)
     --      ↓                   ↓               ↓               ↓
     local splited_data = split(mapargs.context_event_data.modbus_read_data, ',')
     --                     ↑
-    --        not a build-in function, this is external. It split string by delimiter and returns a table
+    --        not a build-in function, this is external. 
+    --        It split string by delimiter and returns a table
 
     -- ... heart beat balabala
 
@@ -808,7 +809,8 @@ function modbus_return_execute(splited_data)
 
     ...
 
-    -- I don't have any better method (I tried the anonymous function table (so-called lambda in python), still very ugly)
+    -- I don't have any better method 
+    -- (I tried the anonymous function table (so-called lambda in python), still very ugly)
 end
 ```
 
