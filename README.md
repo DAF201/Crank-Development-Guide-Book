@@ -1199,3 +1199,5 @@ modbus_post(address, size, type, data)
 4. Heartbeat
 
 Don't worry about this part yet. When you need it indeed, copy everything associated from callback and modbus_event of Brix and change some parameters.
+
+# If you reached here, thank you for reading. I am going back to school now. If you have any questions regarding this or me, email daf 201@blink-in.com or find me in the UTD library the third floor.
