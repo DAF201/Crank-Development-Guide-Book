@@ -669,7 +669,8 @@ function modbus_get(mapages)
 ...
 end
 
---- post is another web programming term that means to send something to the server and let the server change/save it 
+-- post is another web programming term that means to send something 
+-- to the server and let the server change/save it 
 -- (change avatar, password, upload file...)
 function modbus_post(mapagrs)
 ...
@@ -680,7 +681,8 @@ Then we pack up the "gre.send_event_data(event_name,format_string,data,channel)"
 
 ``` lua
 -- I don't send get request from UI, so I didn't use table in get
--- If you don't know what am I talking about, see the last part of "action" in "UI structure and some important concepts"
+-- If you don't know what am I talking about, see the last part of "action" 
+-- in "UI structure and some important concepts"
 function modbus_request(address, size)
     size = size or 1
     if is_dev == 0 then
