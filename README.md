@@ -6,7 +6,7 @@
 >
 > Find me in the UTD library 3rd-floor self-study section near the network bookshelves if you need (I am a college student)
 
-# if you are here to find how to use my modules such as Modbus request or keypad, go to the last section directly.
+# if you are here to find how to use my modules such as Modbus request or keypad to wrap up something, go to the last section directly.
 
 # foreword
 ----
@@ -821,6 +821,235 @@ And thankfully we are done with this preaching, for now.
 # free_components
 ----
 
+[[Now playing メリーバッドエンド(merry bad end)]](https://www.youtube.com/watch?v=kffrKgAN7tI)
+
+Number keypad v2 (there is no char keypad cause I don't have time to make that, dealing with UI costs tons of time):
+```lua
+function keypad_init(mapargs) -- when touch the button,sync for the buffer with the old value
+    gre.set_layer_attrs("number_input_v2", { -- layer show up
+        ['hidden'] = 0
+    })
+    gre.set_layer_attrs("num_keypad_v2", {
+        ['hidden'] = 0
+    })
+
+    local max = mapargs.max or 999 -- set upper boundary
+    local min = mapargs.min or 0 -- set lower boundary
+    local is_string = mapargs.value_is_string or 0
+    local title = mapargs.title or 'title'
+    local unit = mapargs.unit or 'unit'
+
+    gre.set_value("max_value", max) -- set max and min
+    gre.set_value("min_value", min)
+    gre.set_value("target_path", mapargs.path) -- set keypad target
+    gre.set_value("post_value_is_string", is_string) -- set input value type
+    gre.set_value("number_input_v2.input_elements.buffer.text", gre.get_value(mapargs.path .. '.text')) -- set up input box buffer
+    gre.set_value("number_input_v2.input_elements.title.text", title)--set up title
+    gre.set_value("number_input_v2.input_elements.unit.text", unit)--set up unit
+end
+
+local value_table = { -- match up path and others
+    ["Compressor_layer.OnDelay_control.text"] = {data_app["compressorondelay"], 44042, 1}, -- this kind of UI engine save a value, lua script save another copy of the same value is ridiculously stupid
+    ["Compressor_layer.HoldOff_control.text"] = {data_app["holdofftime"], 44043, 1}
+}
+
+function keypad_button(mapagrs)
+    local key = mapagrs.key -- the key being pressed
+    local max = tonumber(gre.get_value("max_value")) -- set max and min values for input
+    local min = tonumber(gre.get_value("min_value"))
+
+    local buffer = gre.get_value("number_input_v2.input_elements.buffer.text") -- sync buffer value with the front end buffer
+
+    if key == 'enter' then
+        local target = gre.get_value("target_path") .. '.text' -- where to change
+        gre.set_value(target, buffer) -- save buffer to frontend value
+        value_table[target][1] = buffer -- save buffer to lua value(what a stupid structure)
+        gre.set_layer_attrs("number_input_v2", { -- hide keypad
+            ['hidden'] = 1
+        })
+        gre.set_layer_attrs("num_keypad_v2", {
+            ['hidden'] = 1
+        })
+
+        if #value_table[target] ~= 1 then -- send modbus post
+            modbus_post(value_table[target][2], value_table[target][3], tonumber(gre.get_value("post_value_is_string")),
+                buffer)
+        end
+        return
+    end
+
+    if key == 'delete' then
+        if #buffer ~= 1 then -- buffer(string) size larger then 1
+            buffer = buffer:sub(1, #buffer - 1) -- remove the last char from buffer
+            gre.set_value("number_input_v2.input_elements.buffer.text", tonumber(buffer)) -- sync input box value
+        else -- buffer size is 1
+            buffer = '' -- buffer empty
+            gre.set_value("number_input_v2.input_elements.buffer.text", buffer) -- sync input box value
+        end
+        return
+    end
+
+    if key == 'cancel' then
+        gre.set_layer_attrs("number_input_v2", { -- hide the keypad
+            ['hidden'] = 1
+        })
+        gre.set_layer_attrs("num_keypad_v2", {
+            ['hidden'] = 1
+        })
+        return
+    end
+
+    if tonumber(buffer .. key) > max or tonumber(buffer .. key) < min then -- out of boundary, not doing anything
+        return
+    end
+
+    buffer = buffer .. key -- append the input value to buffer
+    gre.set_value("number_input_v2.input_elements.buffer.text", tonumber(buffer)) -- sync input box
+
+end
+```
+
+Unpack(don't ask me why doesn't this thing has build-in unpack, IDK):
+```lua
+
+--for lua lower than 5
+function unpack(t, i)
+    i = i or 1
+    if t[i] ~= nil then
+        return t[i], unpack(t, i + 1)
+    end
+end
+--cannot handle nested tables
+
+```
+
+Hide via Lua(link the hide to a UI flag variable saves you tons of time, so don't use following method):
+```lua
+function get_hidden_test()
+    gre.set_value("TEXT_BACKGROUND.bg.line4",tostring(control['hidden']))--0 is show 1 is hide
+    gre.set_control_attrs("TEXT_BACKGROUND.bg",{['hidden']=1})--hide something via lua
+end
+```
+
+Echo and dump(in real linux environment, print will not work):
+```lua
+function echo(string)
+    print(string)-- for develop purpose
+    os.execute('echo ' .. string .. '>/dev/ttySC0')--change last part to your path
+end
+
+-- dump a table to string, use with echo like echo(dump(table))
+function dump(o)
+    if type(o) == 'table' then
+        local s = '{ '
+        for k, v in pairs(o) do
+            if type(k) ~= 'number' then
+                k = '"' .. k .. '"'
+            end
+            s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
+        end
+        return s .. '} '
+    else
+        return tostring(o)
+    end
+end
+```
+
+split and tobin(mostly for event receiving):
+```lua
+function split(s, delimiter)
+    result = {};
+    
+    if s ~= nil then
+      for match in (s .. delimiter):gmatch('(.-)' .. delimiter) do
+          table.insert(result, match);
+      end
+    end
+    return result;
+end
+
+function tobin(x)
+    ret = ''
+    while x ~= 1 and x ~= 0 do
+        ret = tostring(x % 2) .. ret
+        x = math.modf(x / 2)
+    end
+    ret = tostring(x) .. ret
+    while (#ret < 16) do
+        ret = '0' .. ret
+    end
+    return ret
+end
+```
+
+heartbeat (a term from live stream technology to ensure connection vitality):
+```lua
+-- from callback.lua
+--above is the AppStart
+
+...
+
+callback_register('heart_beat_deactive', heart_beat_deactive, 2) -- heartbeat deactive
+callback_register('heartbeat_status_check', heartbeat_status_check, 1) -- heartbeat checking
+
+...
+
+-- from modbus_event.lua
+
+...
+
+function modbus_return(mapargs)
+    local splited_data = split(mapargs.context_event_data.modbus_read_data, ',')
+
+    if #heart_beat < 3 then
+        if splited_data[3] ~= nil then
+            heart_beat[#heart_beat + 1] = true -- append heart beat
+        else
+            heart_beat[#heart_beat + 1] = false -- invaild data
+            return
+        end
+    else
+        if splited_data[3] ~= nil then
+            heart_beat[#heart_beat + 1] = true -- append heart beat and remove oldest heart beat
+            table.remove(heart_beat, 1)
+        else
+            heart_beat[#heart_beat + 1] = false -- invaild data
+            table.remove(heart_beat, 1)
+        end
+    end
+
+    modbus_return_execute(splited_data) -- execute/data analysis
+
+end
+
+heart_beat = {true, true, true}
+curtain_status = 0
+
+function heartbeat_status_check()
+    if #heart_beat == 0 then -- no heart beat
+        gre.set_layer_attrs("commFailLayer", {
+            ['hidden'] = 0
+        })
+        curtain_status = 1 --curtain close
+    else
+        if curtain_status == 1 and all(heart_beat) then --curtain closed and heart beat okay for 3s
+            gre.set_layer_attrs("commFailLayer", {
+                ['hidden'] = 1
+            })
+            curtain_status = 0 --curtain open
+        end
+    end
+end
+
+function heart_beat_deactive()
+    if #heart_beat > 0 then
+        table.remove(heart_beat, 1)
+    end
+end
+
+...
+
+```
 
 # modules
 ----
