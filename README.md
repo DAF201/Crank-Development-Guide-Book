@@ -595,15 +595,15 @@ gre.set_value("backend_version", "08/15/2022" )
 4. Next time, when I need to use the backend version data, such as update screen display, I use
 
 ```lua
-gre.get_value("backend_version")
+some_variable_name = gre.get_value("backend_version")
 ```
 
-to take variables out from UI. And if we just directly bind this UI variable to display, we can directly change the value displayed on screen which should be 08/15/2022 now.
+to take variables out from UI. And if we just directly bind this UI variable to display, we can now change the value shown on the screen which should be 08/15/2022 now.
 
 # data_IO
 ----
 
-The IO system of the Crank is like MQTT in my opinion. The way the communication system work like below (They call it modbus).
+The IO system of the Crank is like MQTT in my opinion. The communication system works like the one below (They call it Modbus).
 
 ![image](./src/communication_structure.drawio.png)
 
@@ -611,10 +611,24 @@ I said it is just like MQTT cause when you are trying to send data to the backen
 
 With this structure, UI and backend are separate from each other. The UI only needs to send the outgoing event to the channel and do the next thing. It does not have to wait until the backend finishes the event and returns a result. Instead, it has a built-in event listener which listens for the incoming events and triggers callback functions.
 
-This incoming modbus_ret event will trigger the Lua function "modbus_return" and pass the whole event to it as parameter.
+This incoming modbus_ret event will trigger the Lua function "modbus_return" and pass the whole event to it as the parameter.
+
 ![image](./src/Screenshot%20(63).png)
 
-When we try to send a event, we need to make sure the event is already defined in UI(just like you need to declear variable in some languages like C/C++/Java). 
+When we try to send an event, we need to make sure the event is already defined in UI(just like you need to declare variables in some languages like C/C++/Java). Now go to UI, click on the "edit all user custom events" on the top with a brown "e" icon.
+
+----
+
+Firstly, we need to give the event a name. The name of the event is the tag that allows the event listener to distinguish different events.
+
+Then, we have the event type. Event type defines what is the purpose of an event, where "self" means something that happens to the board or UI, "outgoing" means something to be sent out from the UI, and "incoming" means something coming into the UI. Only "outgoing" type events can be sent out and "incoming" type events can be received.
+
+Lastly, the event data labels are a type of formatting how the backend going to take data out from the event. It reminds me of the term "schema" of GraphQL. Both of them are some type of user-defined formatting to tell the receiving side what is being received and what are the data types of them.
+![image](./src/event_structure.drawio.png)
+
+Remainder: date takes more space(bits) must be placed frontier (except string which you cannot determine size). The auto sorting which enabled by default will sort for you, but you still need to write data in order when sending.
+
+![image](./src/Screenshot%20(64).png)
 
 # free_components
 ----
