@@ -1081,27 +1081,119 @@ system("ssh root@%s"%ip)
 
 1. Keypad
 
-    To add a keypad to a control, you need to go to UI, copy the path of where you are adding the keypad to.
+To add a keypad to control, you need to go to UI and copy the path of where you are adding the keypad too.
 
-    Then, ensure you havea variable name text with string type and linked to a render externsion element
+Then, ensure you have variable name text with string type and linked to a render extension element
 
-    ![image](./src/Screenshot%20(72).png)
+![image](./src/Screenshot%20(72).png)
 
-    Next step, copy the keypad_init from somewhere or create an action with touch as event. Fill in your data.
+In the next step, copy the keypad_init from somewhere or create an action with touch as the event. Fill in your data.
 
-    ![image](./src/Screenshot%20(73).png)
+![image](./src/Screenshot%20(73).png)
 
-    (remeber to remove the "" copied from path)
+(remeber to remove the "" copied from path)
 
-    You don't need to manually callup the keypad layer, that is included in function (just ensure you have that layer).
+You don't need to manually call up the keypad layer, that is included in the function (just ensure you have that layer).
 
-    This keypad is like C++, you need to setup environment, but actual using is really easy. You need to have following to make sure keypad can run correctly.
+This keypad is like C++, you need to set up the environment (which is very hard), but actual using is really easy. You need to have the following to make sure the keypad can run correctly.
 
-    ![image](./src/Screenshot%20(74).png)
-    ![image](./src/Screenshot%20(75).png)
-    ![image](./src/Screenshot%20(76).png)
+![image](./src/Screenshot%20(74).png)
+![image](./src/Screenshot%20(75).png)
+![image](./src/Screenshot%20(76).png)
 
-    Additionally, if you want to send post, you will need to add your path and other info to this table
+Additionally, if you want to send post, you will need to add your path and other info to this table
 
-    ![image](./src/Screenshot%20(77).png)
-    (replace the data_app with gre.get_value in next project. I don't have time to make those large changes)
+![image](./src/Screenshot%20(77).png)
+(replace the data_app with gre.get_value in next project. I don't have time to make those large changes)
+
+2. Timer task
+
+Insert following to the beginning of your system init if you don't have it 
+
+```lua
+gre.timer_set_interval(clock, 1000) 
+```
+
+at the beginning of your system init.
+
+When you need to create a timed task, use
+
+```lua
+
+--       must be unique | function, no () | optional  |  optional
+--                 ↓       ↓                    ↓           ↓
+callback_register('id', function, interval, args1, args2, args3)
+--                                   ↑              ↑
+--                             int in second |  optional
+```
+
+To add to task table, all arguements are optional.
+
+When you no longer need a task, use
+
+```lua
+callback_unregister('id')
+```
+
+To unregister it from task table
+
+For example, I have a function to get something from 40003, and it must get data before init finish, then I add to ensure I got data at lease once:
+
+```lua
+callback_register('modbus_request_40003', modbus_request, 1, 40003) -- homescreen info registers
+```
+
+In AppStart function. In the executation part, I will add "callback_unregister('modbus_request_40003')" to remove it from task table
+
+```lua
+if splited_data[1] == '40003' then
+        data_app['barrelcount'] = tonumber(tobin(splited_data[3]):sub(10, 12), 2)
+        data_app['language'] = tonumber(tobin(splited_data[3]):sub(3, 7), 2)
+        data_app['time_from_cloud'] = tonumber(tobin(splited_data[3]):sub(8, 8), 2)
+        data_app['compressor'] = tonumber(tobin(splited_data[3]):sub(9, 9), 2)
+
+        reciving_flags[40003] = true --init flags, don't worry about this
+
+        callback_unregister('modbus_request_40003')
+        BarrelSetup() -- update barrel UI
+        return
+end
+```
+
+3. modbus_rquest and modbus_post
+
+Request means get in most of the case... 
+
+Before sending, make sure you have your channel read somewhere:
+
+```lua
+gBackendChannel = "Your_Outgoing_Channel_name"
+```
+
+Now assume you have something to get, use:
+
+```lua
+-- both decimal int
+modbus_request(starting_register_address, number_of_registers)
+```
+
+to send a get request to the backend (make sure the backend channel is also set correctly).
+
+But most of the time, request get are sent by task table.
+
+```lua
+callback_register('modbus_request_40051', modbus_request, 4, 40051, 5) -- UVC4 Firmware Version
+callback_register('modbus_request_40056', modbus_request, 4, 40056, 7) -- Model
+callback_register('modbus_request_40063', modbus_request, 4, 40063, 5) -- BOM
+callback_register('modbus_request_40068', modbus_request, 4, 40068, 4) -- SN
+callback_register('modbus_request_40072', modbus_request, 4, 40072, 3) -- Store ID
+```
+
+For posting, currently, all of them were embedded in the keypad. If you want to send one for some reason, use:
+
+```lua
+-- address, size, type are int
+-- data can be int or string base on type
+-- type: 0 int, 1 string
+modbus_post(address, size, type, data)
+```
