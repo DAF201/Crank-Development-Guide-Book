@@ -774,8 +774,10 @@ end
 
 -- as I said, I don't have a good solution to such thing yet, so "if then return end"
 function modbus_return_execute(splited_data)
-    if splited_data[1] == '40003' then -- check which register, for some mutiple register requestes, you may want to check data size
-        data_app['barrelcount'] = tonumber(tobin(splited_data[3]):sub(10, 12), 2) -- tobin is not built-in function, it will convert string hex to string binary for splitting later
+    -- check which register, for some mutiple register requestes, you may want to check data size
+    if splited_data[1] == '40003' then 
+        -- tobin is not built-in function, it will convert string hex to string binary for splitting later
+        data_app['barrelcount'] = tonumber(tobin(splited_data[3]):sub(10, 12), 2) 
         data_app['language'] = tonumber(tobin(splited_data[3]):sub(3, 7), 2)
         data_app['time_from_cloud'] = tonumber(tobin(splited_data[3]):sub(8, 8), 2)
         data_app['compressor'] = tonumber(tobin(splited_data[3]):sub(9, 9), 2)
