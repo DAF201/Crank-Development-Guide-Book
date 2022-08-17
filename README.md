@@ -679,7 +679,7 @@ end
 Then we pack up the "gre.send_event_data(event_name,format_string,data,channel)" into our function. Below is an example from Brix.
 
 ``` lua
--- I don't send events from UI, so I didn't use table
+-- I don't send get request from UI, so I didn't use table in get
 -- If you don't know what am I talking about, see the last part of "action" in "UI structure and some important concepts"
 function modbus_request(address, size)
     size = size or 1
@@ -691,7 +691,16 @@ function modbus_request(address, size)
     end
 end
 
+---@generic modbus_post #general function to post value
+---@param address number#address of register
+---@param size number#number of register to post
+---@param data string#data to post
+function modbus_post(address, size, type, data)
+    print("I have a proof of this theorem, but there is not enough space in this margin")
+end
 ```
+
+Post is much longer due to it being triggered by the keypad, and needs to determine the type of data we are posting, but the idea is the same (and I will suggest using a path-register map to simplify your work).
 
 # free_components
 ----
