@@ -726,6 +726,33 @@ end
 
 As you see, the data part is a table that matches your labels, this is important. Then we can use those two functions to send events out.
 
+----
+
+Now for receiving, which is triggered by the build-in event listener.
+
+Firstly, we need to have an event ready, which means go talk to whoever made the backend, or you can just compile a new one if you know how to use the C gre library (which I don't, I only made a halfway complete framework for backend).
+
+Now I assume you have an event name from your backend, now we can move on to crate event.
+
+![image](./src/Screenshot%20(69).png)
+
+Then we add an action to the event listener about what to do after receiving this event called modbus_ret (add to the application, don't just add to a random layer or control)
+
+![image](./src/Screenshot%20(71).png)
+(ignore heart beat part, they belongs to heartbeat service which ensure the communication quality)
+
+As you see, I add a Lua script to it. When the event listener received the modbus_ret, it will call this "modbus return" function with a table passed in. For this part, I really don't have any good way to abstract it, so just use if.. then .. return end.
+
+Here is another important part, because I said I want to make this more abstract, I made a simple protocol with the backend
+
+```lua
+--    this is a table | table pass in | event data | label of data
+--      ↓                   ↓               ↓               ↓
+local splited_data = split(mapargs.context_event_data.modbus_read_data, ',')
+--                     ↑
+--        not a build-in function, this is external. It split string by delimiter and returns a table
+```
+
 # free_components
 ----
 
