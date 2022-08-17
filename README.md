@@ -38,6 +38,7 @@ I am not here to teach you Lua, and I will assume you are familiar with Lua synt
 7. [data_IO](#data_IO)
 8. [some components](#free_components)
 9. [how to use my modules](#modules)
+
 # something_general
 
 ----
@@ -241,7 +242,18 @@ below is an example of a press action, it will call the Lua function hello_world
 <!-- <img src="https://github.com/DAF201/Crank_DEV_Guide/blob/main/src/Screenshot%20(45).png"> -->
 ![image](./src/Screenshot%20(45).png)
 
-you can also make it trigger by other events or doing other things
+you can also make it trigger by other events or doing other things. 
+
+However, when you try to pass value in Lua function, your values are passed in as a table, you will need to take values out from table before use (and all of them passed in as string by default).
+
+```lua
+function table_parameter(mapargs)
+    local str = mapargs.string
+    print(str)
+end
+```
+![image](./src/Screenshot%20(67).png)
+![image](./src/Screenshot%20(68).png)
 
 ### event
 
@@ -653,7 +665,7 @@ However, it is not very smart to copy and pasted this around to where you need t
 ```lua
 --- get is a web programming term that means to send a request to get something from the server 
 -- (usually an HTML file which is basically a web page)
-function modbus_get(mapagrs)
+function modbus_get(mapages)
 ...
 end
 
@@ -662,8 +674,25 @@ end
 function modbus_post(mapagrs)
 ...
 end
+```
+
+Then we pack up the "gre.send_event_data(event_name,format_string,data,channel)" into our function. Below is an example from Brix.
+
+``` lua
+-- I don't send events from UI, so I didn't use table
+-- If you don't know what am I talking about, see the last part of "action" in "UI structure and some important concepts"
+function modbus_request(address, size)
+    size = size or 1
+    if is_dev == 0 then
+      gre.send_event_data('modbus_r', '2u1 addr 2u1 size', {
+        addr = address,
+        size = size
+      }, gBackendChannel)
+    end
+end
 
 ```
+
 # free_components
 ----
 
