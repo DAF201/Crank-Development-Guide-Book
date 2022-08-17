@@ -9,7 +9,6 @@
 # if you are here to find how to use my modules such as Modbus request or keypad, go to the last section directly.
 
 # foreword
-
 ----
 
 I am not here to teach you Lua, and I will assume you are familiar with Lua syntax, keywords, style, and grammar... Below, I will only go over things I found important, for other parts like metrics, connectors, and two searches in SDK, I will not explain how to use them. Also, before you start reading the remaining parts, you need to know:
@@ -36,11 +35,10 @@ I am not here to teach you Lua, and I will assume you are familiar with Lua synt
 5. [task table](#task_table)
 6. [data_structure](#data_structure)
 7. [data_IO](#data_IO)
-8. [some components](#free_components)
+8. [some components that make life easier](#free_components)
 9. [how to use my modules](#modules)
 
 # something_general
-
 ----
 
 First of all, Crank is an embedded UI SDK. It allows you to make embedded projects much easier than hand writes every line of code. However, even if you don't have to hand write every line of code, it is still very important to keep the remaining parts "modular", "abstract", and "low coupling".
@@ -151,7 +149,6 @@ data_app["power_saver"] = {
 Also, for those really cost tons of times task, I will suggest pass it to backend and let backend handle that (task time >=3s in my opinion, except internet requests or violent break into a hash). Because backend use a task-inquester
 
 # UI_structure_and_important_concepts
-
 ----
 
 Before moving on, there is another very important part you need to be very familiar with, the structure of the UI.
@@ -273,7 +270,6 @@ add custom event
 ![image](./src/Screenshot%20(46).png)
 
 # system_init
-
 ----
 
 Now we are moving on to the system initialization section, below is the process of the system initialization I redesigned for [brix](https://github.com/DAF201/intern_2022/tree/main/brix).
@@ -312,7 +308,6 @@ gre.thread_create(function)
 However, I will say use those APIs as less as possible. Those built-in threading will slow down the application. The creation of new thread costs, the switches between threads costs, and the running of threading costs. There are costs everywhere when you have too many threads. When I got the Brix, every timed function was called by the "gre.timer_set_interval", and the system was quite slow (the communication part took very long to react, the events were lost some time, and the clock was not loaded correctly sometimes). Later, I decided to rewrite the structure, then I have the structure above (But I will still say keep only necessary parts, I intergraded other services such as heartbeat service which check communication status as tasks into registered tasks to speed it up). 
 
 # customized_functions
-
 ----
 
 Finally, we reached the coding part, so let's start with a hello world.
@@ -380,7 +375,6 @@ you can go to the project path, scripts folder, and create scripts manually but 
 ![image](./src/Screenshot%20(55).png)
 
 # task_table
-
 ----
 
 I pulled this part out cause I think it is important. STOP adding a bunch of gre.timer_set_interval or gre.thread_create (this thing doesn't even support arguments)
@@ -506,7 +500,6 @@ Everything below runs in a separate thread from the main thread, and the timer i
 ![image](./src/timeout.png)
 
 # data_structure
-
 ----
 
 let me draw a conclusion here. I don't see there is any point to save multiple copies of the same variables around unless you are making a backup or so. For the keypad, if the keypad is designed well, it should have a keypad buffer to store temporary data instead of directly making changes to real value.
@@ -815,6 +808,8 @@ end
 ```
 
 You can come up with your event handler or protocol, but I believe you still have to use the event listener to call it anyway (unless you are using FIFO or building your own communication layer which I tried, but found is even slower). So, just stick with this for now.
+
+And thankfully we are done with this preaching.
 
 # free_components
 ----
