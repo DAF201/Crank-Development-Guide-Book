@@ -1114,8 +1114,6 @@ Insert following to the beginning of your system init if you don't have it
 gre.timer_set_interval(clock, 1000) 
 ```
 
-at the beginning of your system init.
-
 When you need to create a timed task, use
 
 ```lua
@@ -1143,7 +1141,7 @@ For example, I have a function to get something from 40003, and it must get data
 callback_register('modbus_request_40003', modbus_request, 1, 40003) -- homescreen info registers
 ```
 
-In AppStart function. In the executation part, I will add "callback_unregister('modbus_request_40003')" to remove it from task table
+In AppStart function, in the executation part, I will add "callback_unregister('modbus_request_40003')" to remove it from task table
 
 ```lua
 if splited_data[1] == '40003' then
