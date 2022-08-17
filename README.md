@@ -782,8 +782,10 @@ function modbus_return_execute(splited_data)
         data_app['time_from_cloud'] = tonumber(tobin(splited_data[3]):sub(8, 8), 2)
         data_app['compressor'] = tonumber(tobin(splited_data[3]):sub(9, 9), 2)
 
+        -- part of init, to ensure this part of data were received before open the "curtain"
         reciving_flags[40003] = true
 
+        -- remove from task table, because this part of data we only need it when init
         callback_unregister('modbus_request_40003')
         BarrelSetup() -- update barrel UI
         return
