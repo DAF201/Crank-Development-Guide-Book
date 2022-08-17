@@ -630,6 +630,40 @@ Remainder: date takes more space(bits) must be placed frontier (except string wh
 
 ![image](./src/Screenshot%20(64).png)
 
+----
+
+Finally, we reach the coding part, so lets start with sending event out.
+
+First, we have those functions that can send event out
+
+```lua
+-- send event to channel, no data (like stop something when received a stop event)
+gre.send_event(event,channel)
+
+-- send event with data to channel (we will use this)
+gre.send_event_data(event_name,format_string,data,channel)
+
+-- send an event to a UI layer 
+-- (I never used this cause I don't see what is the point of using it... I can just manipulate UI via function)
+gre.send_event_target(event_name,target,channel)
+```
+
+However, it is not very smart to copy and pasted this around to where you need this, because it will be a calamity when maintaining. So we abstract out two functions from the sending:
+
+```lua
+--- get is a web programming term that means to send a request to get something from the server 
+-- (usually an HTML file which is basically a web page)
+function modbus_get(mapagrs)
+...
+end
+
+--- post is another web programming term that means to send something to the server and let the server change/save it 
+-- (change avatar, password, upload file...)
+function modbus_post(mapagrs)
+...
+end
+
+```
 # free_components
 ----
 
