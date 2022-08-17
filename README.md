@@ -1077,3 +1077,31 @@ system("ssh root@%s"%ip)
 ```
 # modules
 ----
+
+
+1. Keypad
+
+    To add a keypad to a control, you need to go to UI, copy the path of where you are adding the keypad to.
+
+    Then, ensure you havea variable name text with string type and linked to a render externsion element
+
+    ![image](./src/Screenshot%20(72).png)
+
+    Next step, copy the keypad_init from somewhere or create an action with touch as event. Fill in your data.
+
+    ![image](./src/Screenshot%20(73).png)
+
+    (remeber to remove the "" copied from path)
+
+    You don't need to manually callup the keypad layer, that is included in function (just ensure you have that layer).
+
+    This keypad is like C++, you need to setup environment, but actual using is really easy. You need to have following to make sure keypad can run correctly.
+
+    ![image](./src/Screenshot%20(74).png)
+    ![image](./src/Screenshot%20(75).png)
+    ![image](./src/Screenshot%20(76).png)
+
+    Additionally, if you want to send post, you will need to add your path and other info to this table
+
+    ![image](./src/Screenshot%20(77).png)
+    (replace the data_app with gre.get_value in next project. I don't have time to make those large changes)
