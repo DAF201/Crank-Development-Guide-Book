@@ -812,7 +812,7 @@ You can come up with your event handler or protocol, but I believe you still hav
 
 And thankfully we are done with this preaching, for now.
 
-[[Now playing なんとかなるくない？(Nantokanarukunai?)]](https://www.youtube.com/watch?v=s2V1psqVdXA)
+[[Now playing Instant Heaven]](https://www.youtube.com/watch?v=IrrF_bUE8yc)
 
 # free_components
 ----
