@@ -705,6 +705,27 @@ end
 
 Post is much longer due to it being triggered by the keypad, and needs to determine the type of data we are posting, but the idea is the same (and I will suggest using a path-register map to simplify your work).
 
+The core part is like
+```lua
+if type == 0 then -- number
+    gre.send_event_data('modbus_p', '2u1 addr 2u1 size 2u1 type 2u1 value', {
+        addr = address, -- register address
+        size = size, -- register size
+        type = type, -- data type 0:number 1:string
+        value = data -- int data: decimal
+    }, gBackendChannel)
+else -- string
+    gre.send_event_data('modbus_p', '2u1 addr 2u1 size 2u1 type 1s0 value', {
+        addr = address, -- register address
+        size = size, -- register size
+        type = type, -- data type 0:number 1:string
+        value = data -- string data
+    }, gBackendChannel)
+end
+```
+
+As you see, the data part is a table that matches your labels, this is important. Then we can use those two functions to send events out.
+
 # free_components
 ----
 
