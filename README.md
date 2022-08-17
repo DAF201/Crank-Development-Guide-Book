@@ -1162,9 +1162,9 @@ end
 
 3. modbus_rquest and modbus_post
 
-Request means get in most of the case... 
+Request means get in most of the cases... 
 
-Before sending, make sure you have your channel read somewhere:
+Before sending, make sure you have your channel ready somewhere:
 
 ```lua
 gBackendChannel = "Your_Outgoing_Channel_name"
