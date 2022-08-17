@@ -743,14 +743,68 @@ Then we add an action to the event listener about what to do after receiving thi
 
 As you see, I add a Lua script to it. When the event listener received the modbus_ret, it will call this "modbus return" function with a table passed in. For this part, I really don't have any good way to abstract it, so just use if.. then .. return end.
 
-Here is another important part, because I said I want to make this more abstract, I made a simple protocol with the backend
+Here is another important part, because I said I want to make this more abstract, I made a simple protocol with the backend. We split data by comma.
 
 ```lua
---    this is a table | table pass in | event data | label of data
---      ↓                   ↓               ↓               ↓
-local splited_data = split(mapargs.context_event_data.modbus_read_data, ',')
---                     ↑
---        not a build-in function, this is external. It split string by delimiter and returns a table
+---@generic modbus_return #general function recieved events
+---@param mapargs table#table of data of the event
+function modbus_return(mapargs)
+
+    --    this is a table | table pass in | event data | label of data
+    --      ↓                   ↓               ↓               ↓
+    local splited_data = split(mapargs.context_event_data.modbus_read_data, ',')
+    --                     ↑
+    --        not a build-in function, this is external. It split string by delimiter and returns a table
+
+    -- ... heart beat balabala
+
+    modbus_return_execute(splited_data) -- execute/data analysis
+end
+
+
+-- structure of the splited_data, min size 3, expected size = number of register requested +2
+-- splited_data = {
+--     [1] = register_address: stringified unsigned_int,
+--     [2] = register_size: stringified unsigned_int,
+--     [3] = data1 : stringified any,
+--     [4] = data2 : stringified any,
+--     ...
+-- }
+
+
+-- as I said, I don't have a good solution to such thing yet, so "if then return end"
+function modbus_return_execute(splited_data)
+    if splited_data[1] == '40003' then -- check which register, for some mutiple register requestes, you may want to check data size
+        data_app['barrelcount'] = tonumber(tobin(splited_data[3]):sub(10, 12), 2) -- tobin is not built-in function, it will convert string hex to string binary for splitting later
+        data_app['language'] = tonumber(tobin(splited_data[3]):sub(3, 7), 2)
+        data_app['time_from_cloud'] = tonumber(tobin(splited_data[3]):sub(8, 8), 2)
+        data_app['compressor'] = tonumber(tobin(splited_data[3]):sub(9, 9), 2)
+
+        reciving_flags[40003] = true
+
+        callback_unregister('modbus_request_40003')
+        BarrelSetup() -- update barrel UI
+        return
+    end
+
+    if splited_data[1] == '40004' then
+        data_app['uvc4complete'] = tonumber(tobin(splited_data[3]):sub(12, 12), 2)
+        data_app['uvc4failed'] = tonumber(tobin(splited_data[3]):sub(11, 11), 2)
+        reciving_flags[40004] = true
+        if data_app["firmwareUpdateInProcess"] then 
+          if data_app['uvc4complete'] == 1 or data_app['uvc4failed'] == 1 then
+            callback_unregister('modbus_request_40004')
+            data_app["firmwareUpdateInProcess"] = 0
+            hideFirmwareUpdateInProcess()
+          end
+        end
+        
+        return
+    end
+
+    ...
+
+end
 ```
 
 # free_components
