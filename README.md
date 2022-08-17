@@ -656,7 +656,8 @@ gre.send_event(event,channel)
 gre.send_event_data(event_name,format_string,data,channel)
 
 -- send an event to a UI layer 
--- (I never used this cause I don't see what is the point of using it... I can just manipulate UI via function)
+-- (I never used this cause I don't see what is the point of using it... 
+-- I can just manipulate UI via function)
 gre.send_event_target(event_name,target,channel)
 ```
 
