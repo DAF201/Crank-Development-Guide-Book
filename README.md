@@ -614,6 +614,8 @@ With this structure, UI and backend are separate from each other. The UI only ne
 This incoming modbus_ret event will trigger the Lua function "modbus_return" and pass the whole event to it as parameter.
 ![image](./src/Screenshot%20(63).png)
 
+When we try to send a event, we need to make sure the event is already defined in UI(just like you need to declear variable in some languages like C/C++/Java). 
+
 # free_components
 ----
 
