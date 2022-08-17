@@ -42,6 +42,8 @@ I am not here to teach you Lua, and I will assume you are familiar with Lua synt
 # something_general
 ----
 
+[[Now playing Fresh Start (Squid Sisters)]](https://www.youtube.com/watch?v=ofQiYxuJCBc)
+
 First of all, Crank is an embedded UI SDK. It allows you to make embedded projects much easier than hand writes every line of code. However, even if you don't have to hand write every line of code, it is still very important to keep the remaining parts "modular", "abstract", and "low coupling".
 
 ## keep things separate
@@ -311,7 +313,9 @@ However, I will say use those APIs as less as possible. Those built-in threading
 # customized_functions
 ----
 
-Finally, we reached the coding part, so let's start with a hello world.
+[[Now playing ハローディストピア(hello dystopia)]](https://www.youtube.com/watch?v=ye2J__KE9Yg)
+
+Finally, we reached the coding part, so let's start with a hello world, every great project start form hello world.
 
 Suddenly, you realize: "where in the world am I going to put my functions?" The SDK doesn't look like a text editor at all.
 
@@ -812,7 +816,7 @@ You can come up with your event handler or protocol, but I believe you still hav
 
 And thankfully we are done with this preaching, for now.
 
-[[Now playing Instant Heaven]](https://www.youtube.com/watch?v=IrrF_bUE8yc)
+[[Now playing インスタントヘヴン(Instant Heaven)]](https://www.youtube.com/watch?v=IrrF_bUE8yc)
 
 # free_components
 ----
