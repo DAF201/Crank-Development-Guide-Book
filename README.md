@@ -808,6 +808,7 @@ function modbus_return_execute(splited_data)
 
     ...
 
+    -- I don't have any better method (I tried the anonymous function table (so-called lambda in python), still very ugly)
 end
 ```
 
