@@ -10,6 +10,7 @@
 
 # foreword
 ----
+[[Now playing なんとかなるくない？(Nantokanarukunai?)]](https://www.youtube.com/watch?v=s2V1psqVdXA)
 
 I am not here to teach you Lua, and I will assume you are familiar with Lua syntax, keywords, style, and grammar... Below, I will only go over things I found important, for other parts like metrics, connectors, and two searches in SDK, I will not explain how to use them. Also, before you start reading the remaining parts, you need to know:
 
@@ -809,7 +810,9 @@ end
 
 You can come up with your event handler or protocol, but I believe you still have to use the event listener to call it anyway (unless you are using FIFO or building your own communication layer which I tried, but found is even slower). So, just stick with this for now.
 
-And thankfully we are done with this preaching.
+And thankfully we are done with this preaching, for now.
+
+[[Now playing なんとかなるくない？(Nantokanarukunai?)]](https://www.youtube.com/watch?v=s2V1psqVdXA)
 
 # free_components
 ----
