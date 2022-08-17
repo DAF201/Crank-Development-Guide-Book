@@ -814,6 +814,8 @@ function modbus_return_execute(splited_data)
 end
 ```
 
+You can come up with your event handler or protocol, but I believe you still have to use the event listener to call it anyway (unless you are using FIFO or building your own communication layer which I tried, but found is even slower). So, just stick with this for now.
+
 # free_components
 ----
 
