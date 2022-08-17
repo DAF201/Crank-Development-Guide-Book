@@ -6,7 +6,7 @@
 >
 > Find me in the UTD library 3rd-floor self-study section near the network bookshelves if you need (I am a college student)
 
-# if you are here to find how to use my modules such as Modbus or keypad, go to the last section directly.
+# if you are here to find how to use my modules such as Modbus request or keypad, go to the last section directly.
 
 # foreword
 
