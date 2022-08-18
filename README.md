@@ -1231,6 +1231,54 @@ end
 
 I noticed there is a TCP incoming event option earlier, but I don't have experience with Lua socket (only python). So I didn't try that. Maybe you can try to use a socket or HTTP to make a connection if you want I guess? It sounds really weird to me to connect to yourself, stranger than the fact I used to make a "clipboard network connection" between different languages.
 
+
+7. Looper?
+
+An alternative task table that executes one task at a time only, has not yet been added to Brix yet. THIS DOES NOT EXECUTE TASKS BY TIME OR ON TIME.
+
+insert this to your callback.lua and system init function
+
+```lua
+looping = require("loop")
+...
+function system_init(mapargs)
+    --modbus_request_* type task timeout speed: 10 loops->1s by default, can change to other number, bease on looping speed 
+    task_timeout = 10
+    -- you can change looping speed here, but it will also influence task_timeout
+    gre.timer_set_interval(100, looper)
+    ...
+end
+```
+
+Append task to end of table.
+
+```lua
+--  id must be unique, 0 means repeat, 1 means 1 time execute, params are optional
+append_to_loop(string_id, number_repeat_flag, function, param1, param2, param3, param4, param5)
+```
+
+Example of appending
+
+```lua
+--              id        function  param1... max of 5 params
+append_to_loop("test1", 1, print, 'one time executation function test')
+--                repeat? 0:true 1:false
+
+append_to_loop("test2", 0, print, 'repeating executation function test')
+```
+
+Remove a task from the table. Don't try to remove 1 time execute the task(flag 1 task), they will be removed automatically after execution.
+
+```lua
+remove_from_loop(string_id)
+```
+
+Example of removing
+
+```lua
+--                  id
+remove_from_loop("test2")
+```
 ----
 
 > ### If you reached here, thank you for reading. I am going back to school now. If you have any questions regarding this or me, email daf201@blink-in.com or find me at the UTD library on the third floor
