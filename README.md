@@ -1198,6 +1198,36 @@ modbus_post(address, size, type, data)
 
 4. Heartbeat
 
-Don't worry about this part yet. When you need it indeed, copy everything associated from callback and modbus_event of Brix and change some parameters.
+Don't worry about this part yet. When you need it indeed, copy everything associated from callback and modbus_event of Brix and change some parameters. I am not sure do we still need such thing in next project.
 
-# If you reached here, thank you for reading. I am going back to school now. If you have any questions regarding this or me, email daf201@blink-in.com or find me the UTD library the third floor.
+5. FIFO
+
+To be honest I am not very sure if should I put it here. But in case I tried this kind of thing before... You can use the backend to write data to FIFO directly, and UI keeps reading FIFO to get data. I will just say I don't recommend you to use this. Just like reading a normal file, but if you want to make both-direction communications, you will need two FIFO in different directions. Just to provide an idea.
+
+```lua
+function fifo_read() -- test use, for fifo
+    test = io.open('/opt/middleby/brix/modbus_up', 'r')
+    if test == nil then
+        echo('file empty')
+    end
+    io.input(test)
+    while 1 do
+        string_value = io.read(4)
+        if string_value ~= nil then
+            echo('modbus data is : ' .. string_value)
+        else
+            echo('file is temporary empty')
+        end
+        -- case balabala :break
+    end
+    io.close(test)
+end
+```
+
+6. Socket?
+
+I noticed there is a TCP incoming event option earlier, but I don't have experience with Lua socket (only python). So I didn't try that. Maybe you can try to use a socket or HTTP to make a connection if you want I guess? It sounds really weird to me to connect to yourself, stranger than the fact I used to make a "clipboard network connection" between different languages.
+
+----
+
+> ### If you reached here, thank you for reading. I am going back to school now. If you have any questions regarding this or me, email daf201@blink-in.com or find me at the UTD library on the third floor
