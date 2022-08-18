@@ -647,6 +647,9 @@ Finally, we reach the coding part, so lets start with sending event out.
 First, we have those functions that can send event out
 
 ```lua
+
+-- Don't use them directly unless you have a very strong feeling of I need this indeed
+
 -- send event to channel, no data (like stop something when received a stop event)
 gre.send_event(event,channel)
 
