@@ -1242,7 +1242,8 @@ insert this to your callback.lua and system init function
 looping = require("loop")
 ...
 function system_init(mapargs)
-    --modbus_request_* type task timeout speed: 10 loops->1s by default, can change to other number, bease on looping speed 
+    -- modbus_request_* type task timeout speed: 10 loops->1s by default,
+    -- can change to other number, base on looping speed 
     task_timeout = 10
     -- you can change looping speed here, but it will also influence task_timeout
     gre.timer_set_interval(100, looper)
@@ -1253,7 +1254,7 @@ end
 Append task to end of table.
 
 ```lua
---  id must be unique, 0 means repeat, 1 means 1 time execute, params are optional
+-- id must be unique, 0 means repeat, 1 means 1 time execute, params are optional
 append_to_loop(string_id, number_repeat_flag, function, param1, param2, param3, param4, param5)
 ```
 
