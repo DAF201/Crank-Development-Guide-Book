@@ -37,7 +37,7 @@ I am not here to teach you Lua, and I will assume you are familiar with Lua synt
 6. [data_structure](#data_structure)
 7. [data_IO](#data_IO)
 8. [some components that make life easier](#free_components)
-9. [how to use my modules](#modules)
+9. [modules](#modules)
 
 # something_general
 ----
