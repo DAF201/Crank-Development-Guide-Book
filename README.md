@@ -1282,4 +1282,30 @@ remove_from_loop("test2")
 ```
 ----
 
+8. Language set
+
+I need to declear this part is not mine first. 
+
+Add those to your application when start part
+```lua
+    -- English is the application's base design language so we don't have
+    -- to perform any loading initially. If we start with a different language
+    -- then we should use loadOnInit to set those initial values.
+    local attrs = {}
+    attrs.language = "english"
+    -- attrs.loadOnInit = true
+    attrs.textDB = gre.APP_ROOT .. "/translations/translations.csv"
+    attrs.attributeDB = gre.APP_ROOT .. "/translations/attributes.csv"
+
+    Translation = VarLoader.CreateLoader(attrs)
+```
+then add this function to somewhere
+
+```lua
+function language_change(mapargs)
+  local language=mapargs.language
+  Translation:setLanguage(language)
+  -- gre.set_value("your font variable","your font here") --optional
+end
+```
 > ### If you reached here, thank you for reading. I am going back to school now. If you have any questions regarding this or me, email daf201@blink-in.com or find me at the UTD library on the third floor
