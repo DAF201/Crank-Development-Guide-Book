@@ -1305,7 +1305,8 @@ then add this function to somewhere
 function language_change(mapargs)
   local language=mapargs.language
   Translation:setLanguage(language)
-  -- gre.set_value("your font variable","your font here") --optional
+  --local font=mapargs.font
+  -- gre.set_value("your font variable",font) --optional, if your font can display all languages
 end
 ```
 > ### If you reached here, thank you for reading. I am going back to school now. If you have any questions regarding this or me, email daf201@blink-in.com or find me at the UTD library on the third floor
