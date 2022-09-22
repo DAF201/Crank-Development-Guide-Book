@@ -1311,4 +1311,9 @@ end
 ```
 then go to text translate panel to set up all translate text
 when you need to change language, call language_change with language=your_language_here.
+
+9. Variables translator(BETA)
+
+TODO: TO FINISH
+
 > ### If you reached here, thank you for reading. I am going back to school now. If you have any questions regarding this or me, email daf201@blink-in.com or find me at the UTD library on the third floor
