@@ -4,7 +4,7 @@
 > 
 > [Email me](mailto:DAF201@blink-in.com)
 >
-> Find me in the UTD library 3rd-floor self-study section near the network bookshelves if you need (I am a college student)
+> Find me in the ~~UTD~~ Richardson Public Library library 3rd-floor self-study section ~~near the network bookshelves~~ if you need (I am a college student)
 
 # if you are here to find how to use my modules such as Modbus request or keypad to wrap up something, go to the last section directly.
 
@@ -1316,4 +1316,4 @@ when you need to change language, call language_change with language=your_langua
 
 TODO: TO FINISH
 
-> ### If you reached here, thank you for reading. I am going back to school now. If you have any questions regarding this or me, email daf201@blink-in.com or find me at the UTD library on the third floor
+> ### If you reached here, thank you for reading. I am going back to school now. If you have any questions regarding this or me, email daf201@blink-in.com or find me at the ~~UTD~~ Richarson Public library on the third floor
