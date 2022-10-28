@@ -1476,6 +1476,11 @@ usb:get_new_devices({function, arg1...}, { function, arg2...})
 --            arg1...: args of the function, up to 5
 ```
 
+--example: add to init function, this will print usb plug in when usb plug in, print usb unplug when usb upluged
+usb:init()
+append_to_loop('usb_detect', 1, get_new_devices, {print, "usb plug in"}, {print, "usb unpluged"})    --
+
+
 ---
 
 Example: 
