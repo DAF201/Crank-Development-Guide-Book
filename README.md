@@ -1429,7 +1429,7 @@ function usb:init()
     init_devices = get_devices()
 end
 
-function usb:get_new_devices(plugin_callback, unplug_callback)
+function get_new_devices(plugin_callback, unplug_callback)
     os.execute('sleep 1')
     current_devices = get_devices()
     local result = {}
