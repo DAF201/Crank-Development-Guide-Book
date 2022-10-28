@@ -1480,7 +1480,8 @@ usb:get_new_devices({function, arg1...}, { function, arg2...})
 usb:init()
 append_to_loop('usb_detect', 1, get_new_devices, {print, "usb plug in"}, {print, "usb unpluged"})    --
 
-
+-- if you are using it on append_to_loop or call_back_register, remember to remove the usb: at front of the get_new_device in package soure code, otherwise just use usb:get_new_device
+```
 ---
 
 Example: 
