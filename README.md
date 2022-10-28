@@ -1474,14 +1474,15 @@ usb:get_new_devices({function, arg1...}, { function, arg2...})
 --      table: callback table for usb unplug 
 --            function: function to be called when usb drive unplug
 --            arg1...: args of the function, up to 5
-```
 
 --example: add to init function, this will print usb plug in when usb plug in, print usb unplug when usb upluged
 usb:init()
 append_to_loop('usb_detect', 1, get_new_devices, {print, "usb plug in"}, {print, "usb unpluged"})    --
 
--- if you are using it on append_to_loop or call_back_register, remember to remove the usb: at front of the get_new_device in package soure code, otherwise just use usb:get_new_device
+-- if you are using it on append_to_loop or call_back_register, remember to remove the usb: at front of the get_new_device in package soure code
+
 ```
+
 ---
 
 Example: 
