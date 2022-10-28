@@ -1463,12 +1463,18 @@ usb:get_new_devices({function, arg1...}, { function, arg2...})
 -- arg1:
 --      table: callback table for usb plug in 
 --            function: function to be called when usb drive pluged in 
---            arg1...: args of the function, up to 5
+--            arg1...: args of the function, up to 4
 
 -- arg2:
 --      table: callback table for usb unplug 
 --            function: function to be called when usb drive unplug
---            arg1...: args of the function, up to 5
+--            arg1...: args of the function, up to 4
 ```
+
+---
+
+Example: 
+
+![](https://github.com/DAF201/Crank-Development-Guide-Book/blob/main/src/Screenshot%20(139).png)
 
 > ### If you reached here, thank you for reading. I am going back to school now. If you have any questions regarding this or me, email daf201@blink-in.com or find me at the ~~UTD~~ Richarson Public library on the third floor
