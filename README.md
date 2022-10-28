@@ -1436,7 +1436,8 @@ function usb:get_new_devices(plugin_callback, unplug_callback)
     if #current_devices == #init_devices and mounted_devices ~= {} then
         for k, v in pairs(mounted_devices) do
             usb_drive_umount(v)
-            pcall(unplug_callback[1], unplug_callback[2], unplug_callback[3], unplug_callback[4], unplug_callback[5])
+            pcall(unplug_callback[1], unplug_callback[2], unplug_callback[3], unplug_callback[4], unplug_callback[5],
+                unplug_callback[6])
         end
     end
     for i = 0, #current_devices, 1 do
@@ -1444,12 +1445,16 @@ function usb:get_new_devices(plugin_callback, unplug_callback)
             result[#result + 1] = current_devices[i]
             if mounted_devices[current_devices[i][1]] == nil then
                 usb_drive_mount()
-                pcall(plugin_callback[1], plugin_callback[2], plugin_callback[3], plugin_callback[4], plugin_callback[5])
+                pcall(plugin_callback[1], plugin_callback[2], plugin_callback[3], plugin_callback[4], plugin_callback[5]
+                    , plugin_callback[6])
             end
         end
     end
     return result
 end
+
+return usb
+
 ```
 usage:
 
@@ -1463,12 +1468,12 @@ usb:get_new_devices({function, arg1...}, { function, arg2...})
 -- arg1:
 --      table: callback table for usb plug in 
 --            function: function to be called when usb drive pluged in 
---            arg1...: args of the function, up to 4
+--            arg1...: args of the function, up to 5
 
 -- arg2:
 --      table: callback table for usb unplug 
 --            function: function to be called when usb drive unplug
---            arg1...: args of the function, up to 4
+--            arg1...: args of the function, up to 5
 ```
 
 ---
